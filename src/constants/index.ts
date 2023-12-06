@@ -1,0 +1,1 @@
+export const MYSQL_PROVIDER = 'MYSQL_PROVIDER';
