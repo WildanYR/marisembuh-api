@@ -4,10 +4,12 @@ import { User } from 'src/entities/user.entity';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
+import { HashUtility } from 'src/utils/hash.util';
 
 @Module({
   providers: [
     PaginationUtility,
+    HashUtility,
     { provide: USER_REPOSITORY, useValue: User },
     UserService,
   ],

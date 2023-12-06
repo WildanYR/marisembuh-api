@@ -5,11 +5,13 @@ import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreateUser } from './types/create_user.type';
 import { IUpdateUser } from './types/update_user.type';
+import { HashUtility } from 'src/utils/hash.util';
 
 @Injectable()
 export class UserService {
   constructor(
     private paginationUtility: PaginationUtility,
+    private hashUtility: HashUtility,
     @Inject(USER_REPOSITORY) private userRepository: typeof User,
   ) {}
 
@@ -28,7 +30,11 @@ export class UserService {
   }
 
   async create(createUserDTO: ICreateUser): Promise<User> {
-    const user = await this.userRepository.create({ ...createUserDTO });
+    const hashedPassword = await this.hashUtility.hash(createUserDTO.password);
+    const user = await this.userRepository.create({
+      ...createUserDTO,
+      password: hashedPassword,
+    });
     return user;
   }
 
