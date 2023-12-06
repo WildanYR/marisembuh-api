@@ -19,6 +19,7 @@ export class MysqlProvider {
         database: this.configService.get('database.database'),
         define: {
           freezeTableName: true,
+          timestamps: false,
         },
         timezone: this.configService.get('app.timezone'),
       });
