@@ -5,6 +5,7 @@ import { PaginationUtility } from 'src/utils/pagination.util';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { HashUtility } from 'src/utils/hash.util';
+import { UserMapperService } from './user_mapper.service';
 
 @Module({
   providers: [
@@ -12,6 +13,7 @@ import { HashUtility } from 'src/utils/hash.util';
     HashUtility,
     { provide: USER_REPOSITORY, useValue: User },
     UserService,
+    UserMapperService,
   ],
   controllers: [UserController],
 })
