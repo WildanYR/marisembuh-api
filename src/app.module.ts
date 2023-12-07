@@ -11,6 +11,7 @@ import keyConfig from './config/key.config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
 import { ClinicModule } from './modules/clinic/clinic.module';
+import { MedicineModule } from './modules/medicine/medicine.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ClinicModule } from './modules/clinic/clinic.module';
     UserModule,
     AuthModule,
     ClinicModule,
+    MedicineModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
