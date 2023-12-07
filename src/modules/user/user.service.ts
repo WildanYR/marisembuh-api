@@ -29,6 +29,14 @@ export class UserService {
     return response;
   }
 
+  async findById(userId: number): Promise<User> {
+    return await this.userRepository.findOne({ where: { id: userId } });
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    return await this.userRepository.findOne({ where: { email } });
+  }
+
   async create(createUserDTO: ICreateUser): Promise<User> {
     const hashedPassword = await this.hashUtility.hash(createUserDTO.password);
     const user = await this.userRepository.create({
@@ -43,7 +51,6 @@ export class UserService {
     if (!user) {
       throw new NotFoundException(`User with id ${userId} not found`);
     }
-    console.log(updateUserDTO);
     user.set(updateUserDTO);
     await user.save();
     return user;

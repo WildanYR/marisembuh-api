@@ -16,5 +16,6 @@ import { UserMapperService } from './user_mapper.service';
     UserMapperService,
   ],
   controllers: [UserController],
+  exports: [UserService],
 })
 export class UserModule {}
