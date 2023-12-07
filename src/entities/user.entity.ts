@@ -6,6 +6,7 @@ import {
   Model,
   PrimaryKey,
   Table,
+  Unique,
 } from 'sequelize-typescript';
 
 @Table({ tableName: 'user' })
@@ -15,6 +16,7 @@ export class User extends Model {
   @Column(DataType.BIGINT.UNSIGNED)
   id: number;
 
+  @Unique
   @AllowNull(false)
   @Column(DataType.STRING)
   email: string;
