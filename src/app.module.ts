@@ -12,6 +12,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
 import { ClinicModule } from './modules/clinic/clinic.module';
 import { MedicineModule } from './modules/medicine/medicine.module';
+import { DoctorDiagnosisModule } from './modules/doctor_diagnosis/doctor_diagnosis.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { MedicineModule } from './modules/medicine/medicine.module';
     AuthModule,
     ClinicModule,
     MedicineModule,
+    DoctorDiagnosisModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
