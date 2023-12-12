@@ -13,6 +13,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ClinicModule } from './modules/clinic/clinic.module';
 import { MedicineModule } from './modules/medicine/medicine.module';
 import { DoctorDiagnosisModule } from './modules/doctor_diagnosis/doctor_diagnosis.module';
+import { SelfTherapyModule } from './modules/self_therapy/self_therapy.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { DoctorDiagnosisModule } from './modules/doctor_diagnosis/doctor_diagnos
     ClinicModule,
     MedicineModule,
     DoctorDiagnosisModule,
+    SelfTherapyModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
