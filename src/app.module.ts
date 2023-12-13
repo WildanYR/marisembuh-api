@@ -17,6 +17,7 @@ import { SelfTherapyModule } from './modules/self_therapy/self_therapy.module';
 import { TreatmentPacketModule } from './modules/treatment_packet/treatment_packet.module';
 import { TherapyModule } from './modules/therapy/therapy.module';
 import { MeridianModule } from './modules/meridian/meridian.module';
+import { ComplaintModule } from './modules/complaint/complaint.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { MeridianModule } from './modules/meridian/meridian.module';
     TreatmentPacketModule,
     TherapyModule,
     MeridianModule,
+    ComplaintModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
