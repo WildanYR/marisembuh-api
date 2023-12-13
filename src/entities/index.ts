@@ -3,6 +3,7 @@ import { Complaint } from './complaint.entity';
 import { DoctorDiagnosis } from './doctor_diagnosis.entity';
 import { Medicine } from './medicine.entity';
 import { Meridian } from './meridian.entity';
+import { Patient } from './patient.entity';
 import { SelfTherapy } from './self_therapy.entity';
 import { StomachCheckup } from './stomach_checkup.entity';
 import { Therapy } from './therapy.entity';
@@ -20,4 +21,5 @@ export default () => [
   Meridian,
   Complaint,
   StomachCheckup,
+  Patient,
 ];

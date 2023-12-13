@@ -3,11 +3,13 @@ import {
   AutoIncrement,
   Column,
   DataType,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
   Unique,
 } from 'sequelize-typescript';
+import { Patient } from './patient.entity';
 
 @Table({ tableName: 'user' })
 export class User extends Model {
@@ -31,4 +33,7 @@ export class User extends Model {
 
   @Column(DataType.STRING)
   role: string;
+
+  @HasMany(() => Patient)
+  patients: Patient[];
 }
