@@ -1,6 +1,7 @@
 import { Clinic } from './clinic.entity';
 import { DoctorDiagnosis } from './doctor_diagnosis.entity';
 import { Medicine } from './medicine.entity';
+import { Meridian } from './meridian.entity';
 import { SelfTherapy } from './self_therapy.entity';
 import { Therapy } from './therapy.entity';
 import { TreatmentPacket } from './treatment_packet.entity';
@@ -14,4 +15,5 @@ export default () => [
   SelfTherapy,
   TreatmentPacket,
   Therapy,
+  Meridian,
 ];
