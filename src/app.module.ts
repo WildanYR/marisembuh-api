@@ -19,6 +19,7 @@ import { TherapyModule } from './modules/therapy/therapy.module';
 import { MeridianModule } from './modules/meridian/meridian.module';
 import { ComplaintModule } from './modules/complaint/complaint.module';
 import { StomachCheckupModule } from './modules/stomach_checkup/stomach_checkup.module';
+import { TongueCheckupModule } from './modules/tongue_checkup/tongue_checkup.module';
 import { PatientModule } from './modules/patient/patient.module';
 
 @Module({
@@ -40,6 +41,7 @@ import { PatientModule } from './modules/patient/patient.module';
     MeridianModule,
     ComplaintModule,
     StomachCheckupModule,
+    TongueCheckupModule,
     PatientModule,
   ],
   controllers: [AppController],

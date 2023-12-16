@@ -7,6 +7,7 @@ import { Patient } from './patient.entity';
 import { SelfTherapy } from './self_therapy.entity';
 import { StomachCheckup } from './stomach_checkup.entity';
 import { Therapy } from './therapy.entity';
+import { TongueCheckup } from './tongue_checkup.entity';
 import { TreatmentPacket } from './treatment_packet.entity';
 import { User } from './user.entity';
 
@@ -21,5 +22,6 @@ export default () => [
   Meridian,
   Complaint,
   StomachCheckup,
+  TongueCheckup,
   Patient,
 ];
