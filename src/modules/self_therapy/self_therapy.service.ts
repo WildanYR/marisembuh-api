@@ -34,6 +34,12 @@ export class SelfTherapyService {
     );
   }
 
+  async findById(selftherapyId: number): Promise<SelfTherapy> {
+    return await this.selfTherapyRepository.findOne({
+      where: { id: selftherapyId },
+    });
+  }
+
   async findAllByName(name: string): Promise<SelfTherapy[]> {
     return await this.selfTherapyRepository.findAll({
       where: { name: { [Op.substring]: name } },

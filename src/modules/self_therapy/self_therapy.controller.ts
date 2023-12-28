@@ -32,6 +32,11 @@ export class SelfTherapyController {
     });
   }
 
+  @Get(':selfTherapyId')
+  async findById(@Param('selfTherapyId') selfTherapyId: number) {
+    return await this.selfTherapyService.findById(selfTherapyId);
+  }
+
   @HttpCode(HttpStatus.CREATED)
   @Post()
   async create(@Body() createSelfTherapyDTO: CreateSelfTherapyDTO) {
