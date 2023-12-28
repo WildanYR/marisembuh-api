@@ -36,6 +36,12 @@ export class StomachCheckupService {
     );
   }
 
+  async findById(stomachcheckupId: number): Promise<StomachCheckup> {
+    return await this.stomachCheckupRepository.findOne({
+      where: { id: stomachcheckupId },
+    });
+  }
+
   async findAllByName(name: string): Promise<StomachCheckup[]> {
     return await this.stomachCheckupRepository.findAll({
       where: { name: { [Op.substring]: name } },

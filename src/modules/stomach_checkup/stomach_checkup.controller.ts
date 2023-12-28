@@ -32,6 +32,11 @@ export class StomachCheckupController {
     });
   }
 
+  @Get(':stomachcheckupId')
+  async findById(@Param('stomachcheckupId') stomachcheckupId: number) {
+    return await this.stomachCheckupService.findById(stomachcheckupId);
+  }
+
   @HttpCode(HttpStatus.CREATED)
   @Post()
   async create(@Body() createStomachCheckupDTO: CreateStomachCheckupDTO) {
