@@ -35,6 +35,12 @@ export class TreatmentPacketService {
     );
   }
 
+  async findById(treatmentpacketId: number): Promise<TreatmentPacket> {
+    return await this.treatmentPacketRepository.findOne({
+      where: { id: treatmentpacketId },
+    });
+  }
+
   async findAllByName(name: string): Promise<TreatmentPacket[]> {
     return await this.treatmentPacketRepository.findAll({
       where: { name: { [Op.substring]: name } },

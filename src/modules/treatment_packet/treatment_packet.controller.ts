@@ -32,6 +32,11 @@ export class TreatmentPacketController {
     });
   }
 
+  @Get(':treatmentpacketId')
+  async findById(@Param('treatmentpacketId') treatmentpacketId: number) {
+    return await this.treatmentPacketService.findById(treatmentpacketId);
+  }
+
   @HttpCode(HttpStatus.CREATED)
   @Post()
   async create(@Body() createTreatmentPacketDTO: CreateTreatmentPacketDTO) {
