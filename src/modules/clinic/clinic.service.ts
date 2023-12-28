@@ -30,6 +30,12 @@ export class ClinicService {
     );
   }
 
+  async findById(clinicId: number): Promise<Clinic> {
+    return await this.clinicRepository.findOne({
+      where: { id: clinicId },
+    });
+  }
+
   async findAllByName(name: string): Promise<Clinic[]> {
     return await this.clinicRepository.findAll({
       where: { name: { [Op.substring]: name } },

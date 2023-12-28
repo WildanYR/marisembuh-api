@@ -22,12 +22,17 @@ export class ClinicController {
   @Get()
   async getAllWithPagination(
     @Query() paginationDTO: PaginationDTO,
-    @Query('name') name: string,
+    @Query('s') name: string,
   ) {
     if (name) {
       return await this.clinicService.findAllByName(name);
     }
     return await this.clinicService.getAllWithPagination({ ...paginationDTO });
+  }
+
+  @Get(':clinicId')
+  async findById(@Param('clinicId') clinicId: number) {
+    return await this.clinicService.findById(clinicId);
   }
 
   @HttpCode(HttpStatus.CREATED)
