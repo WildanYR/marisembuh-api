@@ -32,6 +32,11 @@ export class TongueCheckupController {
     });
   }
 
+  @Get(':tongueCheckupId')
+  async findById(@Param('tongueCheckupId') tongueCheckupId: number) {
+    return await this.tongueCheckupService.findById(tongueCheckupId);
+  }
+
   @HttpCode(HttpStatus.CREATED)
   @Post()
   async create(@Body() createTongueCheckupDTO: CreateTongueCheckupDTO) {

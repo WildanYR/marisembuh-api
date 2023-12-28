@@ -34,6 +34,12 @@ export class TongueCheckupService {
     );
   }
 
+  async findById(tongueCheckupId: number): Promise<TongueCheckup> {
+    return await this.tongueCheckupRepository.findOne({
+      where: { id: tongueCheckupId },
+    });
+  }
+
   async findAllByName(name: string): Promise<TongueCheckup[]> {
     return await this.tongueCheckupRepository.findAll({
       where: { name: { [Op.substring]: name } },
