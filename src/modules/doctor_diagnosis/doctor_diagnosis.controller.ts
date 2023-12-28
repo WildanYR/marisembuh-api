@@ -32,6 +32,11 @@ export class DoctorDiagnosisController {
     });
   }
 
+  @Get(':doctorDiagnosisId')
+  async findById(@Param('doctorDiagnosisId') doctorDiagnosisId: number) {
+    return await this.doctorDiagnosisService.findById(doctorDiagnosisId);
+  }
+
   @HttpCode(HttpStatus.CREATED)
   @Post()
   async create(@Body() createDoctorDiagnosisDTO: CreateDoctorDiagnosisDTO) {

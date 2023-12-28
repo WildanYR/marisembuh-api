@@ -35,6 +35,12 @@ export class DoctorDiagnosisService {
     );
   }
 
+  async findById(doctordiagnosisId: number): Promise<DoctorDiagnosis> {
+    return await this.doctorDiagnosisRepository.findOne({
+      where: { id: doctordiagnosisId },
+    });
+  }
+
   async findAllByName(name: string): Promise<DoctorDiagnosis[]> {
     return await this.doctorDiagnosisRepository.findAll({
       where: { name: { [Op.substring]: name } },
