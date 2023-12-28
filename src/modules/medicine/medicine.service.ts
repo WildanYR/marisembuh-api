@@ -30,6 +30,12 @@ export class MedicineService {
     );
   }
 
+  async findById(medicineId: number): Promise<Medicine> {
+    return await this.medicineRepository.findOne({
+      where: { id: medicineId },
+    });
+  }
+
   async findAllByName(name: string): Promise<Medicine[]> {
     return await this.medicineRepository.findAll({
       where: { name: { [Op.substring]: name } },
