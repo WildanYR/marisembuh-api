@@ -30,6 +30,11 @@ export class TherapyController {
     return await this.therapyService.getAllWithPagination({ ...paginationDTO });
   }
 
+  @Get(':therapyId')
+  async findById(@Param('therapyId') therapyId: number) {
+    return await this.therapyService.findById(therapyId);
+  }
+
   @HttpCode(HttpStatus.CREATED)
   @Post()
   async create(@Body() createTherapyDTO: CreateTherapyDTO) {

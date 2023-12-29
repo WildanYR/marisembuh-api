@@ -30,6 +30,12 @@ export class TherapyService {
     );
   }
 
+  async findById(therapyId: number): Promise<Therapy> {
+    return await this.therapyRepository.findOne({
+      where: { id: therapyId },
+    });
+  }
+
   async findAllByName(name: string): Promise<Therapy[]> {
     return await this.therapyRepository.findAll({
       where: { name: { [Op.substring]: name } },
