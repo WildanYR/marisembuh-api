@@ -36,6 +36,14 @@ export class ComplaintController {
     );
   }
 
+  @Get(':complaintId')
+  async findById(
+    @Param('complaintId') complaintId: number,
+    @Query('with-meridian') withMeridian: boolean,
+  ) {
+    return await this.complaintService.findById(complaintId, withMeridian);
+  }
+
   @HttpCode(HttpStatus.CREATED)
   @Post()
   async create(@Body() createComplaintDTO: CreateComplaintDTO) {

@@ -40,6 +40,21 @@ export class ComplaintService {
     );
   }
 
+  async findById(
+    complaintId: number,
+    withMeridian: boolean,
+  ): Promise<Complaint> {
+    const includeMeridian: FindOptions = {};
+
+    if (withMeridian) {
+      includeMeridian.include = Meridian;
+    }
+    return await this.complaintRepository.findOne({
+      where: { id: complaintId },
+      ...includeMeridian,
+    });
+  }
+
   async findAllByName(
     name: string,
     withMeridian: boolean,

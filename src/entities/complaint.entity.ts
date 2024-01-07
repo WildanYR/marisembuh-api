@@ -23,7 +23,6 @@ export class Complaint extends Model {
   name: string;
 
   @ForeignKey(() => Meridian)
-  @AllowNull(false)
   @Column(DataType.BIGINT.UNSIGNED)
   meridian_id: number;
 
