@@ -6,6 +6,7 @@ import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreateUser } from './types/create_user.type';
 import { IUpdateUser } from './types/update_user.type';
 import { HashUtility } from 'src/utils/hash.util';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -35,6 +36,17 @@ export class UserService {
 
   async findByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne({ where: { email } });
+  }
+
+  async findByNameEmail(query: string): Promise<User[]> {
+    return await this.userRepository.findAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.substring]: query } },
+          { email: { [Op.substring]: query } },
+        ],
+      },
+    });
   }
 
   async create(createUserDTO: ICreateUser): Promise<User> {

@@ -24,13 +24,25 @@ export class UserController {
   ) {}
 
   @Get()
-  async getAllWithPagination(@Query() paginationDTO: PaginationDTO) {
+  async getAllWithPagination(
+    @Query() paginationDTO: PaginationDTO,
+    @Query('s') name: string,
+  ) {
+    if (name) {
+      const users = await this.userService.findByNameEmail(name);
+      return this.userMapperService.mapMany(users);
+    }
     const { items, ...userPgData } =
       await this.userService.getAllWithPagination({
         ...paginationDTO,
       });
     const userMap = this.userMapperService.mapMany(items);
     return { items: userMap, ...userPgData };
+  }
+
+  @Get(':userId')
+  async findById(@Param('userId') userId: number) {
+    return await this.userService.findById(userId);
   }
 
   @HttpCode(HttpStatus.CREATED)
