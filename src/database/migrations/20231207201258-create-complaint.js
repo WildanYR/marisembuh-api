@@ -16,7 +16,6 @@ module.exports = {
       },
       meridian_id: {
         type: Sequelize.BIGINT.UNSIGNED,
-        allowNull: false,
       },
     });
 
