@@ -21,6 +21,7 @@ import { ComplaintModule } from './modules/complaint/complaint.module';
 import { StomachCheckupModule } from './modules/stomach_checkup/stomach_checkup.module';
 import { TongueCheckupModule } from './modules/tongue_checkup/tongue_checkup.module';
 import { PatientModule } from './modules/patient/patient.module';
+import { DurationAdviceModule } from './modules/duration_advice/duration_advice.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { PatientModule } from './modules/patient/patient.module';
     StomachCheckupModule,
     TongueCheckupModule,
     PatientModule,
+    DurationAdviceModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
