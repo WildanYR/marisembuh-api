@@ -22,7 +22,7 @@ export class DoctorDiagnosisController {
   @Get()
   async getAllWithPagination(
     @Query() paginationDTO: PaginationDTO,
-    @Query('name') name: string,
+    @Query('s') name: string,
   ) {
     if (name) {
       return await this.doctorDiagnosisService.findAllByName(name);
