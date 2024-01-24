@@ -118,8 +118,6 @@ module.exports = {
       const newMeridianIds = newMeridians.map((item) => item.id).reverse();
       const complaintData = [];
 
-      console.log(newMeridianIds);
-
       for (let i = 0; i < complaint.length; i++) {
         const meridianId = newMeridianIds[i];
         for (let j = 0; j < complaint[i].length; j++) {
@@ -129,8 +127,6 @@ module.exports = {
           complaintData.push(complaint[i][j]);
         }
       }
-
-      console.log(complaintData);
 
       await queryInterface.bulkInsert('complaint', complaintData, {
         transaction,
