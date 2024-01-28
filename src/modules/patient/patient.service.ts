@@ -82,7 +82,11 @@ export class PatientService {
   }
 
   async create(createPatientDTO: ICreatePatient): Promise<Patient> {
-    return await this.patientRepository.create(createPatientDTO as any);
+    const { birthdate, ...data } = createPatientDTO;
+    if (birthdate) {
+      (data as any).birthdate = birthdate;
+    }
+    return await this.patientRepository.create(data as any);
   }
 
   async update(

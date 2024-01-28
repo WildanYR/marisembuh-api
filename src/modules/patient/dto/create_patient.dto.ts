@@ -4,6 +4,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  ValidateIf,
 } from 'class-validator';
 import { ICreatePatient } from '../types/create_patient.type';
 
@@ -16,6 +17,9 @@ export class CreatePatientDTO implements ICreatePatient {
   @IsString()
   gender: string;
 
+  @ValidateIf(
+    (obj) => typeof obj.birthdate === 'string' && obj.birthdate !== '',
+  )
   @IsOptional()
   @IsDateString()
   birthdate?: Date;
