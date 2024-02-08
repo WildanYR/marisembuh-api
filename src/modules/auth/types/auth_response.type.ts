@@ -3,5 +3,6 @@ export interface IAuthResponse {
   email: string;
   name: string;
   role: string;
+  clinic_id: number;
   token: string;
 }

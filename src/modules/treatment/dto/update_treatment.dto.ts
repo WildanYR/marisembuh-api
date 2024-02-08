@@ -7,10 +7,10 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { ICreateTreatment } from '../types/create_treatment.type';
 import { IPulseCheckup } from '../types/pulse_checkup.type';
 import { ITherapyAction } from '../types/therapy_action.type';
 import { Type } from 'class-transformer';
+import { IUpdateTreatment } from '../types/update_treatment.type';
 
 class PulseCheckupDTO implements IPulseCheckup {
   @IsOptional()
@@ -44,7 +44,7 @@ class TherapyActionDTO implements ITherapyAction {
   detail: string;
 }
 
-export class UpdateTreatmentDTO implements ICreateTreatment {
+export class UpdateTreatmentDTO implements IUpdateTreatment {
   @IsOptional()
   @IsString()
   objective: string;
@@ -115,4 +115,12 @@ export class UpdateTreatmentDTO implements ICreateTreatment {
   @IsOptional()
   @IsNumber({}, { each: true })
   self_therapy?: number[];
+
+  @IsOptional()
+  @IsNumber()
+  user_id?: number;
+
+  @IsOptional()
+  @IsNumber()
+  clinic_id?: number;
 }

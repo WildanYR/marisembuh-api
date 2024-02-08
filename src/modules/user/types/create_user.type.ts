@@ -3,4 +3,5 @@ export interface ICreateUser {
   password: string;
   name: string;
   role: string;
+  clinic_id: number;
 }

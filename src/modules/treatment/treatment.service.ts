@@ -40,6 +40,8 @@ import { Meridian } from 'src/entities/meridian.entity';
 import { Includeable } from 'sequelize';
 import { DurationAdvice } from 'src/entities/duration_advice.entity';
 import { TreatmentPacket } from 'src/entities/treatment_packet.entity';
+import { User } from 'src/entities/user.entity';
+import { Clinic } from 'src/entities/clinic.entity';
 
 @Injectable()
 export class TreatmentService {
@@ -49,6 +51,16 @@ export class TreatmentService {
       as: 'patient',
       attributes: ['id', 'no_rm', 'name', 'gender', 'address'],
     },
+    {
+      model: User,
+      as: 'user',
+    },
+    {
+      model: Clinic,
+      as: 'clinic',
+    },
+  ];
+  getIncludeAll: Includeable[] = [
     {
       model: DurationAdvice,
       as: 'duration_advice',
@@ -118,6 +130,7 @@ export class TreatmentService {
       model: TreatmentPacket,
       as: 'treatment_packet',
     },
+    ...this.getInclude,
   ];
 
   constructor(
@@ -151,15 +164,7 @@ export class TreatmentService {
   ): Promise<IPaginationResponse<Treatment>> {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
-    const include = withRelation
-      ? this.getInclude
-      : [
-          {
-            model: Patient,
-            as: 'patient',
-            attributes: ['id', 'no_rm', 'name', 'gender', 'address'],
-          },
-        ];
+    const include = withRelation ? this.getIncludeAll : this.getInclude;
     const attributes = withRelation
       ? null
       : ['id', 'objective', 'patient_id', 'created_at'];
@@ -181,7 +186,7 @@ export class TreatmentService {
   async findById(treatmentId: number): Promise<Treatment> {
     const treatment = await this.treatmentRepository.findOne({
       where: { id: treatmentId },
-      include: this.getInclude,
+      include: this.getIncludeAll,
     });
     return treatment;
   }
@@ -198,6 +203,8 @@ export class TreatmentService {
         duration_advice_id,
         patient_id,
         treatment_packet_id,
+        user_id,
+        clinic_id,
         ...treatmentDetail
       } = createTreatmentDTO;
       const now = new Date();
@@ -211,6 +218,8 @@ export class TreatmentService {
           duration_advice_id,
           patient_id,
           treatment_packet_id,
+          user_id,
+          clinic_id,
           created_at: now,
         },
         {
@@ -348,32 +357,29 @@ export class TreatmentService {
         evaluation,
         duration_advice_id,
         patient_id,
+        user_id,
+        clinic_id,
         treatment_packet_id,
         ...treatmentDetail
       } = updateTreatmentDTO;
 
-      if (
-        objective ||
-        blood_pressure ||
-        pulse_frequency ||
-        typeof is_pregnant === 'boolean' ||
-        evaluation ||
-        duration_advice_id ||
-        patient_id ||
-        treatment_packet_id
-      ) {
-        const data = new Map();
-        if (objective) data.set('objective', objective);
-        if (blood_pressure) data.set('blood_pressure', blood_pressure);
-        if (pulse_frequency) data.set('pulse_frequency', pulse_frequency);
-        if (typeof is_pregnant === 'boolean')
-          data.set('is_pregnant', is_pregnant);
-        if (evaluation) data.set('evaluation', evaluation);
-        if (duration_advice_id)
-          data.set('duration_advice_id', duration_advice_id);
-        if (patient_id) data.set('patient_id', patient_id);
-        if (treatment_packet_id)
-          data.set('treatment_packet_id', treatment_packet_id);
+      const data = new Map();
+
+      if (objective) data.set('objective', objective);
+      if (blood_pressure) data.set('blood_pressure', blood_pressure);
+      if (pulse_frequency) data.set('pulse_frequency', pulse_frequency);
+      if (typeof is_pregnant === 'boolean')
+        data.set('is_pregnant', is_pregnant);
+      if (evaluation) data.set('evaluation', evaluation);
+      if (duration_advice_id)
+        data.set('duration_advice_id', duration_advice_id);
+      if (patient_id) data.set('patient_id', patient_id);
+      if (treatment_packet_id)
+        data.set('treatment_packet_id', treatment_packet_id);
+      if (user_id) data.set('user_id', user_id);
+      if (clinic_id) data.set('clinic_id', clinic_id);
+
+      if (data.size) {
         await this.treatmentRepository.update(Object.fromEntries(data), {
           where: { id: treatmentId },
           transaction,

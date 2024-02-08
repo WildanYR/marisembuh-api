@@ -1,4 +1,10 @@
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { IUpdateUser } from '../types/update_user.type';
 
 export class UpdateUserDTO implements IUpdateUser {
@@ -17,4 +23,8 @@ export class UpdateUserDTO implements IUpdateUser {
   @IsOptional()
   @IsString()
   role?: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  clinic_id: number;
 }

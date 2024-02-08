@@ -11,10 +11,18 @@ import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreateUser } from './types/create_user.type';
 import { IUpdateUser } from './types/update_user.type';
 import { HashUtility } from 'src/utils/hash.util';
-import { Op, UniqueConstraintError } from 'sequelize';
+import { Includeable, Op, UniqueConstraintError } from 'sequelize';
+import { Clinic } from 'src/entities/clinic.entity';
 
 @Injectable()
 export class UserService {
+  getInclude: Includeable[] = [
+    {
+      model: Clinic,
+      as: 'clinic',
+    },
+  ];
+
   constructor(
     private paginationUtility: PaginationUtility,
     private hashUtility: HashUtility,
@@ -26,7 +34,11 @@ export class UserService {
   ): Promise<IPaginationResponse<User>> {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
-    const users = await this.userRepository.findAndCountAll({ offset, limit });
+    const users = await this.userRepository.findAndCountAll({
+      offset,
+      limit,
+      include: this.getInclude,
+    });
     const response = this.paginationUtility.paginationResponse(
       pagination,
       users.rows,
@@ -36,11 +48,17 @@ export class UserService {
   }
 
   async findById(userId: number): Promise<User> {
-    return await this.userRepository.findOne({ where: { id: userId } });
+    return await this.userRepository.findOne({
+      where: { id: userId },
+      include: this.getInclude,
+    });
   }
 
   async findByEmail(email: string): Promise<User> {
-    return await this.userRepository.findOne({ where: { email } });
+    return await this.userRepository.findOne({
+      where: { email },
+      include: this.getInclude,
+    });
   }
 
   async findByNameEmail(query: string): Promise<User[]> {
@@ -51,6 +69,7 @@ export class UserService {
           { email: { [Op.substring]: query } },
         ],
       },
+      include: this.getInclude,
     });
   }
 
@@ -59,11 +78,14 @@ export class UserService {
       const hashedPassword = await this.hashUtility.hash(
         createUserDTO.password,
       );
-      const user = await this.userRepository.create({
+      const newUser = await this.userRepository.create({
         ...createUserDTO,
         password: hashedPassword,
       });
-      return user;
+      return await this.userRepository.findOne({
+        where: { id: newUser.id },
+        include: this.getInclude,
+      });
     } catch (error) {
       if (error instanceof UniqueConstraintError) {
         throw new UnprocessableEntityException('Email sudah terpakai');
@@ -79,7 +101,10 @@ export class UserService {
     }
     user.set(updateUserDTO);
     await user.save();
-    return user;
+    return await this.userRepository.findOne({
+      where: { id: user.id },
+      include: this.getInclude,
+    });
   }
 
   async destroy(userId: number): Promise<void> {

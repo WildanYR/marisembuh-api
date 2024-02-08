@@ -1,8 +1,10 @@
 import {
   AllowNull,
   AutoIncrement,
+  BelongsTo,
   Column,
   DataType,
+  ForeignKey,
   HasMany,
   Model,
   PrimaryKey,
@@ -10,6 +12,7 @@ import {
   Unique,
 } from 'sequelize-typescript';
 import { Patient } from './patient.entity';
+import { Clinic } from './clinic.entity';
 
 @Table({ tableName: 'user' })
 export class User extends Model {
@@ -34,6 +37,13 @@ export class User extends Model {
   @Column(DataType.STRING)
   role: string;
 
+  @ForeignKey(() => Clinic)
+  @Column(DataType.BIGINT.UNSIGNED)
+  clinic_id: number;
+
   @HasMany(() => Patient)
   patients: Patient[];
+
+  @BelongsTo(() => Clinic, 'clinic_id')
+  clinic: Clinic;
 }

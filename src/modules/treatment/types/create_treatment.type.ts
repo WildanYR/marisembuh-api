@@ -19,4 +19,6 @@ export interface ICreateTreatment {
   tongue_checkup?: number[];
   therapy: ITherapyAction[];
   self_therapy?: number[];
+  user_id: number;
+  clinic_id?: number;
 }

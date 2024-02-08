@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ICreateUser } from './../types/create_user.type';
 
 export class CreateUserDTO implements ICreateUser {
@@ -17,4 +17,8 @@ export class CreateUserDTO implements ICreateUser {
   @IsNotEmpty()
   @IsString()
   role: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  clinic_id: number;
 }

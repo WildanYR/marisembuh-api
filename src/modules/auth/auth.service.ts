@@ -31,6 +31,7 @@ export class AuthService {
       email: user.email,
       name: user.name,
       role: user.role,
+      clinic_id: user.clinic_id,
       token,
     };
   }

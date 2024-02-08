@@ -30,6 +30,8 @@ import { TreatmentSelfTherapy } from './treatment_self_therapy.entity';
 import { SelfTherapy } from './self_therapy.entity';
 import { TongueCheckup } from './tongue_checkup.entity';
 import { DurationAdvice } from './duration_advice.entity';
+import { User } from './user.entity';
+import { Clinic } from './clinic.entity';
 
 @Table({ tableName: 'treatment' })
 export class Treatment extends Model {
@@ -69,6 +71,14 @@ export class Treatment extends Model {
   @Column(DataType.BIGINT.UNSIGNED)
   treatment_packet_id: number;
 
+  @ForeignKey(() => User)
+  @Column(DataType.BIGINT.UNSIGNED)
+  user_id: number;
+
+  @ForeignKey(() => Clinic)
+  @Column(DataType.BIGINT.UNSIGNED)
+  clinic_id: number;
+
   @BelongsTo(() => Patient, 'patient_id')
   patient: Patient;
 
@@ -104,4 +114,10 @@ export class Treatment extends Model {
 
   @BelongsToMany(() => SelfTherapy, () => TreatmentSelfTherapy)
   self_therapy: SelfTherapy[];
+
+  @BelongsTo(() => User, 'user_id')
+  user: User;
+
+  @BelongsTo(() => Clinic, 'clinic_id')
+  clinic: Clinic;
 }

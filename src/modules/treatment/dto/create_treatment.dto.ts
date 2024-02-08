@@ -117,4 +117,12 @@ export class CreateTreatmentDTO implements ICreateTreatment {
   @IsOptional()
   @IsNumber({}, { each: true })
   self_therapy?: number[];
+
+  @IsNotEmpty()
+  @IsNumber()
+  user_id: number;
+
+  @IsOptional()
+  @IsNumber()
+  clinic_id?: number;
 }
