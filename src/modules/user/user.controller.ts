@@ -40,6 +40,11 @@ export class UserController {
     return { items: userMap, ...userPgData };
   }
 
+  @Get('statistic')
+  async getStatistic(@Query('date') date: string) {
+    return await this.userService.getStatistics(date);
+  }
+
   @Get(':userId')
   async findById(@Param('userId') userId: number) {
     return await this.userService.findById(userId);

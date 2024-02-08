@@ -13,6 +13,7 @@ import { PaginationDTO } from 'src/dto/pagination.dto';
 import { CreatePatientDTO } from './dto/create_patient.dto';
 import { UpdatePatientDTO } from './dto/update_patient_dto';
 import { PatientMapService } from './patient_map.service';
+import { PatientCountConditionDTO } from './dto/patient_count_condition.dto';
 
 @Controller('patient')
 export class PatientController {
@@ -34,6 +35,11 @@ export class PatientController {
       await this.patientService.getAllWithPagination({ ...paginationDTO });
     const patientMaps = this.patientMapService.mapMany(items);
     return { ...pagination, items: patientMaps };
+  }
+
+  @Get('count')
+  async getPatientCount(@Query() patientCondition: PatientCountConditionDTO) {
+    return await this.patientService.count({ ...patientCondition });
   }
 
   @Get(':patientId')

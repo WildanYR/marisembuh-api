@@ -4,10 +4,12 @@ import { Clinic } from 'src/entities/clinic.entity';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ClinicController } from './clinic.controller';
 import { ClinicService } from './clinic.service';
+import { DateUtility } from 'src/utils/date.util';
 
 @Module({
   providers: [
     PaginationUtility,
+    DateUtility,
     { provide: CLINIC_REPOSITORY, useValue: Clinic },
     ClinicService,
   ],

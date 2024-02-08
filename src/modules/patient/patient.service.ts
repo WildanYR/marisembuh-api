@@ -3,21 +3,25 @@ import {
   PAGINATION_DEFAULT_LIMIT,
   PATIENT_REPOSITORY,
   RM_PREFIX,
+  TREATMENT_REPOSITORY,
 } from 'src/constants';
 import { Patient } from 'src/entities/patient.entity';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreatePatient } from './types/create_patient.type';
 import { IUpdatePatient } from './types/update_patient.type';
-import { Op } from 'sequelize';
+import { Op, WhereOptions } from 'sequelize';
 import { User } from 'src/entities/user.entity';
 import { Clinic } from 'src/entities/clinic.entity';
+import { IPatientCountCondition } from './types/patient_count_condition.type';
+import { Treatment } from 'src/entities/treatment.entity';
 
 @Injectable()
 export class PatientService {
   constructor(
     private paginationUtility: PaginationUtility,
     @Inject(PATIENT_REPOSITORY) private patientRepository: typeof Patient,
+    @Inject(TREATMENT_REPOSITORY) private treatmentRepository: typeof Treatment,
   ) {}
 
   async getAllWithPagination(
@@ -112,5 +116,35 @@ export class PatientService {
       throw new NotFoundException(`patient with id ${patientId} not found`);
     }
     await patient.destroy();
+  }
+
+  async count(patientCondition: IPatientCountCondition): Promise<number> {
+    const condition: WhereOptions = {};
+    if (patientCondition.start_date) {
+      const startDate = new Date(patientCondition.start_date);
+      startDate.setHours(0, 0, 0, 0);
+      let endDate: Date;
+      if (patientCondition.end_date) {
+        endDate = new Date(patientCondition.end_date);
+      } else {
+        endDate = new Date();
+      }
+      condition.created_at = {
+        [Op.between]: [startDate, endDate],
+      };
+    }
+    if (patientCondition.user_id) {
+      condition.user_id = patientCondition.user_id;
+    }
+    if (patientCondition.patient_id) {
+      condition.patient_id = patientCondition.patient_id;
+    }
+    if (patientCondition.clinic_id) {
+      condition.clinic_id = patientCondition.clinic_id;
+    }
+    const patientCount = await this.treatmentRepository.count({
+      where: condition,
+    });
+    return patientCount;
   }
 }

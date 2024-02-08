@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { QueryOptions } from 'sequelize';
 import { Transaction } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import entities from 'src/entities';
@@ -34,5 +35,9 @@ export class MysqlProvider {
 
   async transaction(): Promise<Transaction> {
     return await this.sequelize.transaction();
+  }
+
+  async rawQuery(sql: string, options: QueryOptions) {
+    return await this.sequelize.query(sql, options);
   }
 }
