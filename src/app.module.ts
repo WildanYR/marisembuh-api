@@ -23,6 +23,7 @@ import { TongueCheckupModule } from './modules/tongue_checkup/tongue_checkup.mod
 import { PatientModule } from './modules/patient/patient.module';
 import { DurationAdviceModule } from './modules/duration_advice/duration_advice.module';
 import { TreatmentModule } from './modules/treatment/treatment.module';
+import { AbsenceModule } from './modules/absence/absence.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { TreatmentModule } from './modules/treatment/treatment.module';
     PatientModule,
     DurationAdviceModule,
     TreatmentModule,
+    AbsenceModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],

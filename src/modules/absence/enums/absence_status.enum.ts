@@ -1,0 +1,6 @@
+export enum AbsenceStatus {
+  NO_ABSENCE = 'NO_ABSENCE',
+  HOMECARE = 'HOMECARE',
+  HAS_ABSENT = 'HAS_ABSENT',
+  AFTERWORK = 'AFTERWORK',
+}

@@ -1,3 +1,4 @@
+import { Absence } from './absence.entity';
 import { Clinic } from './clinic.entity';
 import { Complaint } from './complaint.entity';
 import { DoctorDiagnosis } from './doctor_diagnosis.entity';
@@ -46,4 +47,5 @@ export default () => [
   TreatmentPulseCheckup,
   TreatmentTherapy,
   TreatmentSelfTherapy,
+  Absence,
 ];
