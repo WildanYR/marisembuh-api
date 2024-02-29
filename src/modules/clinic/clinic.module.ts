@@ -9,7 +9,6 @@ import { DateUtility } from 'src/utils/date.util';
 @Module({
   providers: [
     PaginationUtility,
-    DateUtility,
     { provide: CLINIC_REPOSITORY, useValue: Clinic },
     ClinicService,
   ],

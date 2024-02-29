@@ -4,21 +4,15 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import {
-  MYSQL_PROVIDER,
-  PAGINATION_DEFAULT_LIMIT,
-  USER_REPOSITORY,
-} from 'src/constants';
+import { PAGINATION_DEFAULT_LIMIT, USER_REPOSITORY } from 'src/constants';
 import { User } from 'src/entities/user.entity';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreateUser } from './types/create_user.type';
 import { IUpdateUser } from './types/update_user.type';
 import { HashUtility } from 'src/utils/hash.util';
-import { Includeable, Op, QueryTypes, UniqueConstraintError } from 'sequelize';
+import { Includeable, Op, UniqueConstraintError } from 'sequelize';
 import { Clinic } from 'src/entities/clinic.entity';
-import { DateUtility } from 'src/utils/date.util';
-import { MysqlProvider } from 'src/database/mysql.provider';
 
 @Injectable()
 export class UserService {
@@ -32,8 +26,6 @@ export class UserService {
   constructor(
     private paginationUtility: PaginationUtility,
     private hashUtility: HashUtility,
-    private dateUtility: DateUtility,
-    @Inject(MYSQL_PROVIDER) private mysqlProvider: MysqlProvider,
     @Inject(USER_REPOSITORY) private userRepository: typeof User,
   ) {}
 
@@ -121,21 +113,5 @@ export class UserService {
       throw new NotFoundException(`User with id ${userId} not found`);
     }
     await user.destroy();
-  }
-
-  async getStatistics(date?: string) {
-    const sql =
-      'SELECT id, name, COALESCE(today_patient, 0) as today_patient, COALESCE(month_patient, 0) as month_patient FROM user AS c LEFT JOIN (SELECT user_id AS t_id, COUNT(user_id) AS today_patient FROM treatment AS j WHERE j.created_at BETWEEN ? AND ? GROUP BY user_id) AS t ON t.t_id = c.id LEFT JOIN (SELECT user_id AS m_id, COUNT(user_id) AS month_patient FROM treatment AS j WHERE j.created_at BETWEEN ? AND ? GROUP BY user_id) AS m ON m.m_id = c.id';
-    const todayDate = date ? new Date(date) : new Date();
-    const nowDateStr = this.dateUtility.formatLocaleString(todayDate);
-    todayDate.setHours(0, 0, 0, 0);
-    const todayDateStr = this.dateUtility.formatLocaleString(todayDate);
-    todayDate.setDate(1);
-    const monthDateStr = this.dateUtility.formatLocaleString(todayDate);
-    const response = await this.mysqlProvider.rawQuery(sql, {
-      type: QueryTypes.SELECT,
-      replacements: [todayDateStr, nowDateStr, monthDateStr, nowDateStr],
-    });
-    return response;
   }
 }

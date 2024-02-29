@@ -30,11 +30,6 @@ export class ClinicController {
     return await this.clinicService.getAllWithPagination({ ...paginationDTO });
   }
 
-  @Get('statistic')
-  async getStatistic(@Query('date') date: string) {
-    return await this.clinicService.getStatistics(date);
-  }
-
   @Get(':clinicId')
   async findById(@Param('clinicId') clinicId: number) {
     return await this.clinicService.findById(clinicId);

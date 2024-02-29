@@ -40,14 +40,10 @@ export class UserController {
     return { items: userMap, ...userPgData };
   }
 
-  @Get('statistic')
-  async getStatistic(@Query('date') date: string) {
-    return await this.userService.getStatistics(date);
-  }
-
   @Get(':userId')
   async findById(@Param('userId') userId: number) {
-    return await this.userService.findById(userId);
+    const user = await this.userService.findById(userId);
+    return this.userMapperService.mapOne(user);
   }
 
   @HttpCode(HttpStatus.CREATED)
@@ -69,6 +65,6 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':userId')
   async destroy(@Param('userId') userId: number) {
-    return await this.userService.destroy(userId);
+    await this.userService.destroy(userId);
   }
 }

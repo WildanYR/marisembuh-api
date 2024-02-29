@@ -6,13 +6,11 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { HashUtility } from 'src/utils/hash.util';
 import { UserMapperService } from './user_mapper.service';
-import { DateUtility } from 'src/utils/date.util';
 
 @Module({
   providers: [
     PaginationUtility,
     HashUtility,
-    DateUtility,
     { provide: USER_REPOSITORY, useValue: User },
     UserService,
     UserMapperService,
