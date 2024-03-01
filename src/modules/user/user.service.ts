@@ -99,6 +99,12 @@ export class UserService {
     if (!user) {
       throw new NotFoundException(`User with id ${userId} not found`);
     }
+    if (updateUserDTO.password) {
+      const hashedPassword = await this.hashUtility.hash(
+        updateUserDTO.password,
+      );
+      updateUserDTO.password = hashedPassword;
+    }
     user.set(updateUserDTO);
     await user.save();
     return await this.userRepository.findOne({
