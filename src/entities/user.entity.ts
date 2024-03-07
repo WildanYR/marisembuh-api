@@ -13,6 +13,7 @@ import {
 } from 'sequelize-typescript';
 import { Patient } from './patient.entity';
 import { Clinic } from './clinic.entity';
+import { Absence } from './absence.entity';
 
 @Table({ tableName: 'user' })
 export class User extends Model {
@@ -43,6 +44,9 @@ export class User extends Model {
 
   @HasMany(() => Patient)
   patients: Patient[];
+
+  @HasMany(() => Absence)
+  absences: Absence[];
 
   @BelongsTo(() => Clinic, 'clinic_id')
   clinic: Clinic;

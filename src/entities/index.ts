@@ -7,6 +7,7 @@ import { Medicine } from './medicine.entity';
 import { Meridian } from './meridian.entity';
 import { Patient } from './patient.entity';
 import { SelfTherapy } from './self_therapy.entity';
+import { Setting } from './setting.entity';
 import { StomachCheckup } from './stomach_checkup.entity';
 import { Therapy } from './therapy.entity';
 import { TongueCheckup } from './tongue_checkup.entity';
@@ -48,4 +49,5 @@ export default () => [
   TreatmentTherapy,
   TreatmentSelfTherapy,
   Absence,
+  Setting,
 ];

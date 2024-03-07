@@ -12,7 +12,10 @@ export class AbsenceService {
     @Inject(ABSENCE_REPOSITORY) private absenceRepository: typeof Absence,
   ) {}
 
-  generateAbsenceResponse(status: AbsenceStatus, absence_code?: string) {
+  private generateAbsenceResponse(
+    status: AbsenceStatus,
+    absence_code?: string,
+  ) {
     const response: IAbsenceResponse = {
       status,
     };
@@ -22,7 +25,7 @@ export class AbsenceService {
     return response;
   }
 
-  generateAbsenceCode() {
+  private generateAbsenceCode() {
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     for (let i = 0; i < 6; i++) {
@@ -133,7 +136,6 @@ export class AbsenceService {
       newAbsence.code_from = absenceCodeFrom.user_id;
       absenceStatus = AbsenceStatus.HAS_ABSENT;
     }
-
     await newAbsence.save();
     return this.generateAbsenceResponse(absenceStatus, absence_code);
   }
