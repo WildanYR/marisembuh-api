@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { AbsenceAnalyticService } from './absence_analytic.service';
-import { AbsenceDateFilterDTO } from './dto/absence_date_filter.dto';
 import { PaginationDTO } from 'src/dto/pagination.dto';
+import { DateFilterDTO } from 'src/dto/date_filter.dto';
 
 @Controller('analytic/absence')
 export class AbsenceAnalyticController {
@@ -10,7 +10,7 @@ export class AbsenceAnalyticController {
   @Get()
   async getAbsenceAnalyticPagination(
     @Query() paginationDTO: PaginationDTO,
-    @Query() dateFilterDTO: AbsenceDateFilterDTO,
+    @Query() dateFilterDTO: DateFilterDTO,
     @Query('clinic_id') clinicId: number,
     @Query('s') search: string,
   ) {
@@ -34,7 +34,7 @@ export class AbsenceAnalyticController {
   async getAbsenceAnalyticDetail(
     @Param('userId') userId: number,
     @Query() paginationDTO: PaginationDTO,
-    @Query() dateFilterDTO: AbsenceDateFilterDTO,
+    @Query() dateFilterDTO: DateFilterDTO,
   ) {
     return await this.absenceAnalyticService.getAbsenceAnalyticDetail(
       { ...paginationDTO },
