@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
 import { DateUtility } from 'src/utils/date.util';
-import { ClinicAnalyticService } from './clinic_analytic.service';
-import { ClinicAnalyticController } from './clinic_analytic.controller';
 import { AbsenceAnalyticService } from './absence_analytic.service';
 import { AbsenceAnalyticController } from './absence_analytic.controller';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import {
   ABSENCE_REPOSITORY,
+  CLINIC_REPOSITORY,
   SETTING_REPOSITORY,
   THERAPY_REPOSITORY,
   USER_REPOSITORY,
@@ -17,6 +16,7 @@ import { Setting } from 'src/entities/setting.entity';
 import { Therapy } from 'src/entities/therapy.entity';
 import { TotalPatientAnalyticService } from './total_patient_analytic.service';
 import { TotalPatientAnalyticController } from './total_patient_analytic.controller';
+import { Clinic } from 'src/entities/clinic.entity';
 
 @Module({
   providers: [
@@ -25,15 +25,11 @@ import { TotalPatientAnalyticController } from './total_patient_analytic.control
     { provide: USER_REPOSITORY, useValue: User },
     { provide: ABSENCE_REPOSITORY, useValue: Absence },
     { provide: SETTING_REPOSITORY, useValue: Setting },
+    { provide: CLINIC_REPOSITORY, useValue: Clinic },
     { provide: THERAPY_REPOSITORY, useValue: Therapy },
-    ClinicAnalyticService,
     TotalPatientAnalyticService,
     AbsenceAnalyticService,
   ],
-  controllers: [
-    ClinicAnalyticController,
-    TotalPatientAnalyticController,
-    AbsenceAnalyticController,
-  ],
+  controllers: [TotalPatientAnalyticController, AbsenceAnalyticController],
 })
 export class AnalyticModule {}
