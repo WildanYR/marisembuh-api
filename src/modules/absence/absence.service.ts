@@ -5,10 +5,12 @@ import { Absence } from 'src/entities/absence.entity';
 import { AbsenceStatus } from './enums/absence_status.enum';
 import { IAbsenceResponse } from './types/absence_response.type';
 import { AbsenceType } from './enums/absence_type.enum';
+import { DateUtility } from 'src/utils/date.util';
 
 @Injectable()
 export class AbsenceService {
   constructor(
+    private dateUtility: DateUtility,
     @Inject(ABSENCE_REPOSITORY) private absenceRepository: typeof Absence,
   ) {}
 
@@ -36,12 +38,14 @@ export class AbsenceService {
   }
 
   async checkAbsence(user_id: number): Promise<IAbsenceResponse> {
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
+    const { startOfDay, endOfDay } = this.dateUtility.getStartEndOfDay();
     const absence = await this.absenceRepository.findOne({
-      where: { user_id, created_at: { [Op.between]: [startOfDay, endOfDay] } },
+      where: {
+        user_id,
+        created_at: {
+          [Op.between]: [startOfDay, endOfDay],
+        },
+      },
     });
     if (!absence) {
       return this.generateAbsenceResponse(AbsenceStatus.NO_ABSENCE);
@@ -72,10 +76,7 @@ export class AbsenceService {
     )
       return absenceResponse;
 
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
+    const { startOfDay, endOfDay } = this.dateUtility.getStartEndOfDay();
     const absence_code = this.generateAbsenceCode();
 
     // handle finish homecare
@@ -83,7 +84,7 @@ export class AbsenceService {
       if (data !== ABSENCE_QRCODE_TEXT)
         throw new BadRequestException('Qrcode tidak sesuai');
       await this.absenceRepository.update(
-        { in_clinic_time: new Date(), absence_code },
+        { in_clinic_time: this.dateUtility.getNow(), absence_code },
         {
           where: {
             user_id,
@@ -144,12 +145,11 @@ export class AbsenceService {
     const absenceResponse = await this.checkAbsence(user_id);
     if (absenceResponse.status !== AbsenceStatus.HAS_ABSENT)
       throw new BadRequestException('Absen hari ini tidak ditemukan');
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date();
-    endOfDay.setHours(23, 59, 59, 999);
+
+    const { startOfDay, endOfDay } = this.dateUtility.getStartEndOfDay();
+
     await this.absenceRepository.update(
-      { afterwork_time: new Date() },
+      { afterwork_time: this.dateUtility.getNow() },
       {
         where: {
           user_id,

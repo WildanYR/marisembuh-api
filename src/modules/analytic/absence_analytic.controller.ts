@@ -16,16 +16,12 @@ export class AbsenceAnalyticController {
   ) {
     if (search) {
       return this.absenceAnalyticService.getAbsenceAnalyticByName(search, {
-        start_date: new Date(dateFilterDTO.start_date),
-        end_date: new Date(dateFilterDTO.end_date),
+        ...dateFilterDTO,
       });
     }
     return await this.absenceAnalyticService.getAbsenceAnalyticPagination(
       { ...paginationDTO },
-      {
-        start_date: new Date(dateFilterDTO.start_date),
-        end_date: new Date(dateFilterDTO.end_date),
-      },
+      { ...dateFilterDTO },
       clinicId,
     );
   }
@@ -39,10 +35,7 @@ export class AbsenceAnalyticController {
     return await this.absenceAnalyticService.getAbsenceAnalyticDetail(
       { ...paginationDTO },
       userId,
-      {
-        start_date: new Date(dateFilterDTO.start_date),
-        end_date: new Date(dateFilterDTO.end_date),
-      },
+      { ...dateFilterDTO },
     );
   }
 }

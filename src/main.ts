@@ -4,8 +4,12 @@ import { ConfigService } from '@nestjs/config';
 import { ApiExceptionFilter } from './middlewares/exception_filter.middleware';
 import { ValidationError, ValidationPipe } from '@nestjs/common';
 import { InvalidDataException } from './exceptions/invalid_data.exception';
+import { Settings as LuxonSetting } from 'luxon';
 
 async function bootstrap() {
+  LuxonSetting.defaultLocale = 'id-ID';
+  LuxonSetting.defaultZone = 'Asia/Jakarta';
+
   const app = await NestFactory.create(AppModule, { cors: true });
   const httpAdapterHost = app.get(HttpAdapterHost);
   const configService = app.get(ConfigService);

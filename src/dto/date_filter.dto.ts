@@ -4,9 +4,9 @@ import { IDateFilter } from 'src/types/date_filter.type';
 export class DateFilterDTO implements IDateFilter {
   @IsOptional()
   @IsDateString()
-  start_date: Date;
+  start_date: string;
 
   @IsOptional()
   @IsDateString()
-  end_date: Date;
+  end_date: string;
 }

@@ -6,10 +6,12 @@ import { Patient } from 'src/entities/patient.entity';
 import { PatientController } from './patient.controller';
 import { PatientMapService } from './patient_map.service';
 import { Treatment } from 'src/entities/treatment.entity';
+import { DateUtility } from 'src/utils/date.util';
 
 @Module({
   providers: [
     PaginationUtility,
+    DateUtility,
     PatientService,
     PatientMapService,
     { provide: PATIENT_REPOSITORY, useValue: Patient },

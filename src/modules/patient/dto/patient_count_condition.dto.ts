@@ -13,12 +13,12 @@ export class PatientCountConditionDTO implements IPatientCountCondition {
   )
   @IsOptional()
   @IsDateString()
-  start_date: Date;
+  start_date: string;
 
   @ValidateIf((obj) => typeof obj.end_date === 'string' && obj.end_date !== '')
   @IsOptional()
   @IsDateString()
-  end_date: Date;
+  end_date: string;
 
   @IsOptional()
   @IsNumber()

@@ -18,18 +18,12 @@ export class TotalPatientAnalyticController {
     if (name) {
       return await this.totalPatientAnalyticService.getClinicAnalyticByName(
         name,
-        {
-          start_date: new Date(dateFilterDTO.start_date),
-          end_date: new Date(dateFilterDTO.end_date),
-        },
+        { ...dateFilterDTO },
       );
     }
     return await this.totalPatientAnalyticService.getClinicAnalyticPagination(
       { ...paginationDTO },
-      {
-        start_date: new Date(dateFilterDTO.start_date),
-        end_date: new Date(dateFilterDTO.end_date),
-      },
+      { ...dateFilterDTO },
     );
   }
 
@@ -42,18 +36,12 @@ export class TotalPatientAnalyticController {
     if (name) {
       return await this.totalPatientAnalyticService.getUserAnalyticByName(
         name,
-        {
-          start_date: new Date(dateFilterDTO.start_date),
-          end_date: new Date(dateFilterDTO.end_date),
-        },
+        { ...dateFilterDTO },
       );
     }
     return await this.totalPatientAnalyticService.getUserAnalyticPagination(
       { ...paginationDTO },
-      {
-        start_date: new Date(dateFilterDTO.start_date),
-        end_date: new Date(dateFilterDTO.end_date),
-      },
+      { ...dateFilterDTO },
     );
   }
 
@@ -66,18 +54,12 @@ export class TotalPatientAnalyticController {
     if (name) {
       return await this.totalPatientAnalyticService.getTherapyAnalyticByName(
         name,
-        {
-          start_date: new Date(dateFilterDTO.start_date),
-          end_date: new Date(dateFilterDTO.end_date),
-        },
+        { ...dateFilterDTO },
       );
     }
     return await this.totalPatientAnalyticService.getTherapyAnalyticPagination(
       { ...paginationDTO },
-      {
-        start_date: new Date(dateFilterDTO.start_date),
-        end_date: new Date(dateFilterDTO.end_date),
-      },
+      { ...dateFilterDTO },
     );
   }
 }

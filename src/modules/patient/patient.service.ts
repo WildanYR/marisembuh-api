@@ -15,11 +15,13 @@ import { User } from 'src/entities/user.entity';
 import { Clinic } from 'src/entities/clinic.entity';
 import { IPatientCountCondition } from './types/patient_count_condition.type';
 import { Treatment } from 'src/entities/treatment.entity';
+import { DateUtility } from 'src/utils/date.util';
 
 @Injectable()
 export class PatientService {
   constructor(
     private paginationUtility: PaginationUtility,
+    private dateUtility: DateUtility,
     @Inject(PATIENT_REPOSITORY) private patientRepository: typeof Patient,
     @Inject(TREATMENT_REPOSITORY) private treatmentRepository: typeof Treatment,
   ) {}
@@ -119,20 +121,15 @@ export class PatientService {
   }
 
   async count(patientCondition: IPatientCountCondition): Promise<number> {
-    const condition: WhereOptions = {};
-    if (patientCondition.start_date) {
-      const startDate = new Date(patientCondition.start_date);
-      startDate.setHours(0, 0, 0, 0);
-      let endDate: Date;
-      if (patientCondition.end_date) {
-        endDate = new Date(patientCondition.end_date);
-      } else {
-        endDate = new Date();
-      }
-      condition.created_at = {
-        [Op.between]: [startDate, endDate],
-      };
-    }
+    const { startOfDate, endOfDate } = this.dateUtility.dateFilterToDateRange({
+      start_date: patientCondition.start_date,
+      end_date: patientCondition.end_date,
+    });
+
+    const condition: WhereOptions = {
+      created_at: { [Op.between]: [startOfDate, endOfDate] },
+    };
+
     if (patientCondition.user_id) {
       condition.user_id = patientCondition.user_id;
     }
