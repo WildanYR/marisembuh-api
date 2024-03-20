@@ -35,13 +35,11 @@ export class DateUtility {
       startOfDate = DateTime.now().startOf('month');
     }
 
-    if (
-      dateFilter.end_date &&
-      DateTime.fromISO(dateFilter.end_date) <= DateTime.now().endOf('day')
-    ) {
-      endOfDate = DateTime.fromISO(dateFilter.end_date);
+    const today = DateTime.now().endOf('day');
+    if (dateFilter.end_date && DateTime.fromISO(dateFilter.end_date) >= today) {
+      endOfDate = today;
     } else {
-      endOfDate = DateTime.now().endOf('month');
+      endOfDate = DateTime.fromISO(dateFilter.end_date);
     }
 
     return {
