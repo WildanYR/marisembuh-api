@@ -11,23 +11,22 @@ import {
 import { TreatmentService } from './treatment.service';
 import { PaginationDTO } from 'src/dto/pagination.dto';
 import { CreateTreatmentDTO } from './dto/create_treatment.dto';
+import { GetTreatmentQueryDTO } from './dto/get_treatment_query.dto';
 
 @Controller('treatment')
 export class TreatmentController {
   constructor(private treatmentService: TreatmentService) {}
 
-  @Get('patient/:patientId')
+  @Get()
   async getAllPatientTreatment(
-    @Param('patientId') patientId: number,
     @Query() paginationDTO: PaginationDTO,
-    @Query('with-relation') withRelation: boolean,
+    @Query() getTreatmentQueryDTO: GetTreatmentQueryDTO,
   ) {
     return await this.treatmentService.getAllWithPagination(
-      patientId,
+      { ...getTreatmentQueryDTO },
       {
         ...paginationDTO,
       },
-      withRelation || false,
     );
   }
 

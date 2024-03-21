@@ -42,6 +42,7 @@ import { DurationAdvice } from 'src/entities/duration_advice.entity';
 import { TreatmentPacket } from 'src/entities/treatment_packet.entity';
 import { User } from 'src/entities/user.entity';
 import { Clinic } from 'src/entities/clinic.entity';
+import { IGetTreatmentQuery } from './types/get_treatment_query.type';
 
 @Injectable()
 export class TreatmentService {
@@ -158,18 +159,31 @@ export class TreatmentService {
   ) {}
 
   async getAllWithPagination(
-    patientId: number,
+    getTreatmentQuery: IGetTreatmentQuery,
     pagination: IPagination,
-    withRelation: boolean = false,
   ): Promise<IPaginationResponse<Treatment>> {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
-    const include = withRelation ? this.getIncludeAll : this.getInclude;
-    const attributes = withRelation
+    const include = getTreatmentQuery.with_relation
+      ? this.getIncludeAll
+      : this.getInclude;
+    const attributes = getTreatmentQuery.with_relation
       ? null
       : ['id', 'objective', 'patient_id', 'created_at'];
+
+    let condition: any = {};
+    if (getTreatmentQuery.patient_id) {
+      condition.patient_id = getTreatmentQuery.patient_id;
+    }
+    if (getTreatmentQuery.user_id) {
+      condition.user_id = getTreatmentQuery.user_id;
+    }
+    if (getTreatmentQuery.clinic_id) {
+      condition.clinic_id = getTreatmentQuery.clinic_id;
+    }
+
     const treatment = await this.treatmentRepository.findAndCountAll({
-      where: { patient_id: patientId },
+      where: condition,
       order: [['created_at', 'DESC']],
       include,
       attributes,
