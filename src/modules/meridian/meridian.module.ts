@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MERIDIAN_REPOSITORY } from 'src/constants';
+import { MERIDIAN_REPOSITORY } from 'src/constants/repository.const';
 import { Meridian } from 'src/entities/meridian.entity';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { MeridianController } from './meridian.controller';

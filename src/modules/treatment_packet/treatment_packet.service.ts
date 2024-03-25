@@ -1,14 +1,12 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Op } from 'sequelize';
-import {
-  TREATMENT_PACKET_REPOSITORY,
-  PAGINATION_DEFAULT_LIMIT,
-} from 'src/constants';
 import { TreatmentPacket } from 'src/entities/treatment_packet.entity';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreateTreatmentPacket } from './types/create_treatment_packet.type';
 import { IUpdateTreatmentPacket } from './types/update_treatment_packet.type';
+import { PAGINATION_DEFAULT_LIMIT } from 'src/constants/database.const';
+import { TREATMENT_PACKET_REPOSITORY } from 'src/constants/repository.const';
 
 @Injectable()
 export class TreatmentPacketService {

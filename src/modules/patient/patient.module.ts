@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { PatientService } from './patient.service';
-import { PATIENT_REPOSITORY, TREATMENT_REPOSITORY } from 'src/constants';
+import {
+  PATIENT_REPOSITORY,
+  TREATMENT_REPOSITORY,
+} from 'src/constants/repository.const';
 import { Patient } from 'src/entities/patient.entity';
 import { PatientController } from './patient.controller';
 import { PatientMapService } from './patient_map.service';

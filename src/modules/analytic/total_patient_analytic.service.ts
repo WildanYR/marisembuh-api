@@ -1,12 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { QueryTypes } from 'sequelize';
-import {
-  CLINIC_REPOSITORY,
-  MYSQL_PROVIDER,
-  PAGINATION_DEFAULT_LIMIT,
-  THERAPY_REPOSITORY,
-  USER_REPOSITORY,
-} from 'src/constants';
 import { IDateFilter } from 'src/types/date_filter.type';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { ITotalatientAnalyticResponse } from './types/total_patient_analytic_response.type';
@@ -16,6 +9,15 @@ import { DateUtility } from 'src/utils/date.util';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { Clinic } from 'src/entities/clinic.entity';
 import { User } from 'src/entities/user.entity';
+import {
+  MYSQL_PROVIDER,
+  PAGINATION_DEFAULT_LIMIT,
+} from 'src/constants/database.const';
+import {
+  CLINIC_REPOSITORY,
+  THERAPY_REPOSITORY,
+  USER_REPOSITORY,
+} from 'src/constants/repository.const';
 
 @Injectable()
 export class TotalPatientAnalyticService {

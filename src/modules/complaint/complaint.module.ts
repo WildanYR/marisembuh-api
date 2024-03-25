@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { COMPLAINT_REPOSITORY } from 'src/constants';
+import { COMPLAINT_REPOSITORY } from 'src/constants/repository.const';
 import { Complaint } from 'src/entities/complaint.entity';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ComplaintController } from './complaint.controller';

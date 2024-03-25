@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { STOMACH_CHECKUP_REPOSITORY } from 'src/constants';
+import { STOMACH_CHECKUP_REPOSITORY } from 'src/constants/repository.const';
 import { StomachCheckup } from 'src/entities/stomach_checkup.entity';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { StomachCheckupController } from './stomach_checkup.controller';

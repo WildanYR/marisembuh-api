@@ -4,7 +4,6 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { PAGINATION_DEFAULT_LIMIT, USER_REPOSITORY } from 'src/constants';
 import { User } from 'src/entities/user.entity';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
@@ -13,6 +12,8 @@ import { IUpdateUser } from './types/update_user.type';
 import { HashUtility } from 'src/utils/hash.util';
 import { Includeable, Op, UniqueConstraintError } from 'sequelize';
 import { Clinic } from 'src/entities/clinic.entity';
+import { PAGINATION_DEFAULT_LIMIT } from 'src/constants/database.const';
+import { USER_REPOSITORY } from 'src/constants/repository.const';
 
 @Injectable()
 export class UserService {

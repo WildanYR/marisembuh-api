@@ -1,5 +1,5 @@
 import { Global, Module } from '@nestjs/common';
-import { MYSQL_PROVIDER } from 'src/constants';
+import { MYSQL_PROVIDER } from 'src/constants/database.const';
 import { MysqlProvider } from './mysql.provider';
 
 @Global()

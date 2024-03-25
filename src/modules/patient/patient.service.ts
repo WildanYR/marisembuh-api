@@ -1,10 +1,4 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import {
-  PAGINATION_DEFAULT_LIMIT,
-  PATIENT_REPOSITORY,
-  RM_PREFIX,
-  TREATMENT_REPOSITORY,
-} from 'src/constants';
 import { Patient } from 'src/entities/patient.entity';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
@@ -16,6 +10,14 @@ import { Clinic } from 'src/entities/clinic.entity';
 import { IPatientCountCondition } from './types/patient_count_condition.type';
 import { Treatment } from 'src/entities/treatment.entity';
 import { DateUtility } from 'src/utils/date.util';
+import {
+  PAGINATION_DEFAULT_LIMIT,
+  RM_PREFIX,
+} from 'src/constants/database.const';
+import {
+  PATIENT_REPOSITORY,
+  TREATMENT_REPOSITORY,
+} from 'src/constants/repository.const';
 
 @Injectable()
 export class PatientService {

@@ -1,14 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IDateFilter } from '../../types/date_filter.type';
-import {
-  ABSENCE_LATE_HOUR_DEFAULT,
-  ABSENCE_LATE_HOUR_SETTING,
-  ABSENCE_REPOSITORY,
-  MYSQL_PROVIDER,
-  PAGINATION_DEFAULT_LIMIT,
-  SETTING_REPOSITORY,
-  USER_REPOSITORY,
-} from 'src/constants';
 import { QueryTypes } from 'sequelize';
 import { MysqlProvider } from 'src/database/mysql.provider';
 import { DateUtility } from 'src/utils/date.util';
@@ -22,6 +13,19 @@ import { User } from 'src/entities/user.entity';
 import { Absence } from 'src/entities/absence.entity';
 import { Op } from 'sequelize';
 import { Setting } from 'src/entities/setting.entity';
+import {
+  MYSQL_PROVIDER,
+  PAGINATION_DEFAULT_LIMIT,
+} from 'src/constants/database.const';
+import {
+  USER_REPOSITORY,
+  ABSENCE_REPOSITORY,
+  SETTING_REPOSITORY,
+} from 'src/constants/repository.const';
+import {
+  ABSENCE_LATE_HOUR_SETTING,
+  ABSENCE_LATE_HOUR_DEFAULT,
+} from 'src/constants/setting.const';
 
 @Injectable()
 export class AbsenceAnalyticService {

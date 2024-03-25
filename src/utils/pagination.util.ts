@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PAGINATION_DEFAULT_LIMIT } from 'src/constants';
+import { PAGINATION_DEFAULT_LIMIT } from 'src/constants/database.const';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 
 @Injectable()

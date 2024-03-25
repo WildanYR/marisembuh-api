@@ -1,18 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  MYSQL_PROVIDER,
-  PAGINATION_DEFAULT_LIMIT,
-  TREATMENT_COMPLAINT_REPOSITORY,
-  TREATMENT_DOCTOR_DIAGNOSIS_REPOSITORY,
-  TREATMENT_MEDICINE_REPOSITORY,
-  TREATMENT_PULSE_CHECKUP_REPOSITORY,
-  TREATMENT_REPOSITORY,
-  TREATMENT_SELF_THERAPY_REPOSITORY,
-  TREATMENT_STOMACH_CHECKUP_REPOSITORY,
-  TREATMENT_THERAPY_HISTORY_REPOSITORY,
-  TREATMENT_THERAPY_REPOSITORY,
-  TREATMENT_TONGUE_CHECKUP_REPOSITORY,
-} from 'src/constants';
 import { Treatment } from 'src/entities/treatment.entity';
 import { ICreateTreatment } from './types/create_treatment.type';
 import { MysqlProvider } from 'src/database/mysql.provider';
@@ -43,6 +29,22 @@ import { TreatmentPacket } from 'src/entities/treatment_packet.entity';
 import { User } from 'src/entities/user.entity';
 import { Clinic } from 'src/entities/clinic.entity';
 import { IGetTreatmentQuery } from './types/get_treatment_query.type';
+import {
+  MYSQL_PROVIDER,
+  PAGINATION_DEFAULT_LIMIT,
+} from 'src/constants/database.const';
+import {
+  TREATMENT_REPOSITORY,
+  TREATMENT_DOCTOR_DIAGNOSIS_REPOSITORY,
+  TREATMENT_MEDICINE_REPOSITORY,
+  TREATMENT_THERAPY_HISTORY_REPOSITORY,
+  TREATMENT_COMPLAINT_REPOSITORY,
+  TREATMENT_STOMACH_CHECKUP_REPOSITORY,
+  TREATMENT_TONGUE_CHECKUP_REPOSITORY,
+  TREATMENT_PULSE_CHECKUP_REPOSITORY,
+  TREATMENT_THERAPY_REPOSITORY,
+  TREATMENT_SELF_THERAPY_REPOSITORY,
+} from 'src/constants/repository.const';
 
 @Injectable()
 export class TreatmentService {

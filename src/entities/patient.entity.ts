@@ -12,7 +12,7 @@ import {
 } from 'sequelize-typescript';
 import { User } from './user.entity';
 import { Clinic } from './clinic.entity';
-import { RM_PREFIX } from 'src/constants';
+import { RM_PREFIX } from 'src/constants/database.const';
 
 @Table({ tableName: 'patient' })
 export class Patient extends Model {

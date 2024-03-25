@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TREATMENT_PACKET_REPOSITORY } from 'src/constants';
+import { TREATMENT_PACKET_REPOSITORY } from 'src/constants/repository.const';
 import { TreatmentPacket } from 'src/entities/treatment_packet.entity';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { TreatmentPacketController } from './treatment_packet.controller';

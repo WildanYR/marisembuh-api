@@ -1,11 +1,12 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Op } from 'sequelize';
-import { ABSENCE_QRCODE_TEXT, ABSENCE_REPOSITORY } from 'src/constants';
 import { Absence } from 'src/entities/absence.entity';
 import { AbsenceStatus } from './enums/absence_status.enum';
 import { IAbsenceResponse } from './types/absence_response.type';
 import { AbsenceType } from './enums/absence_type.enum';
 import { DateUtility } from 'src/utils/date.util';
+import { ABSENCE_REPOSITORY } from 'src/constants/repository.const';
+import { ABSENCE_QRCODE_TEXT } from 'src/constants/setting.const';
 
 @Injectable()
 export class AbsenceService {

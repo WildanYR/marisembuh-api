@@ -1,7 +1,7 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
-import { PUBLIC_ROUTE } from 'src/constants';
+import { PUBLIC_ROUTE } from 'src/constants/guard.const';
 
 @Injectable()
 export class AuthGuard extends PassportAuthGuard('jwt') {

@@ -1,14 +1,12 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Op } from 'sequelize';
-import {
-  DOCTOR_DIAGNOSIS_REPOSITORY,
-  PAGINATION_DEFAULT_LIMIT,
-} from 'src/constants';
 import { DoctorDiagnosis } from 'src/entities/doctor_diagnosis.entity';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreateDoctorDiagnosis } from './types/create_doctor_diagnosis.type';
 import { IUpdateDoctorDiagnosis } from './types/update_doctor_diagnosis.type';
+import { PAGINATION_DEFAULT_LIMIT } from 'src/constants/database.const';
+import { DOCTOR_DIAGNOSIS_REPOSITORY } from 'src/constants/repository.const';
 
 @Injectable()
 export class DoctorDiagnosisService {

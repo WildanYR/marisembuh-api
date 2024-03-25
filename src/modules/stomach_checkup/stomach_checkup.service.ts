@@ -1,14 +1,12 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Op } from 'sequelize';
-import {
-  STOMACH_CHECKUP_REPOSITORY,
-  PAGINATION_DEFAULT_LIMIT,
-} from 'src/constants';
 import { StomachCheckup } from 'src/entities/stomach_checkup.entity';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreateStomachCheckup } from './types/create_stomach_checkup.type';
 import { IUpdateStomachCheckup } from './types/update_stomach_checkup.type';
+import { PAGINATION_DEFAULT_LIMIT } from 'src/constants/database.const';
+import { STOMACH_CHECKUP_REPOSITORY } from 'src/constants/repository.const';
 
 @Injectable()
 export class StomachCheckupService {

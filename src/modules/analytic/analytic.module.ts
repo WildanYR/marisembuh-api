@@ -3,13 +3,6 @@ import { DateUtility } from 'src/utils/date.util';
 import { AbsenceAnalyticService } from './absence_analytic.service';
 import { AbsenceAnalyticController } from './absence_analytic.controller';
 import { PaginationUtility } from 'src/utils/pagination.util';
-import {
-  ABSENCE_REPOSITORY,
-  CLINIC_REPOSITORY,
-  SETTING_REPOSITORY,
-  THERAPY_REPOSITORY,
-  USER_REPOSITORY,
-} from 'src/constants';
 import { User } from 'src/entities/user.entity';
 import { Absence } from 'src/entities/absence.entity';
 import { Setting } from 'src/entities/setting.entity';
@@ -17,6 +10,13 @@ import { Therapy } from 'src/entities/therapy.entity';
 import { TotalPatientAnalyticService } from './total_patient_analytic.service';
 import { TotalPatientAnalyticController } from './total_patient_analytic.controller';
 import { Clinic } from 'src/entities/clinic.entity';
+import {
+  USER_REPOSITORY,
+  ABSENCE_REPOSITORY,
+  SETTING_REPOSITORY,
+  CLINIC_REPOSITORY,
+  THERAPY_REPOSITORY,
+} from 'src/constants/repository.const';
 
 @Module({
   providers: [

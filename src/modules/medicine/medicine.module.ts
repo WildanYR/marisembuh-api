@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { MEDICINE_REPOSITORY } from 'src/constants';
 import { Medicine } from 'src/entities/medicine.entity';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { MedicineController } from './medicine.controller';
 import { MedicineService } from './medicine.service';
+import { MEDICINE_REPOSITORY } from 'src/constants/repository.const';
 
 @Module({
   providers: [

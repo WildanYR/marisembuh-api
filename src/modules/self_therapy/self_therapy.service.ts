@@ -1,14 +1,12 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Op } from 'sequelize';
-import {
-  SELF_THERAPY_REPOSITORY,
-  PAGINATION_DEFAULT_LIMIT,
-} from 'src/constants';
 import { SelfTherapy } from 'src/entities/self_therapy.entity';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreateSelfTherapy } from './types/create_self_therapy.type';
 import { IUpdateSelfTherapy } from './types/update_self_therapy.type';
+import { PAGINATION_DEFAULT_LIMIT } from 'src/constants/database.const';
+import { SELF_THERAPY_REPOSITORY } from 'src/constants/repository.const';
 
 @Injectable()
 export class SelfTherapyService {

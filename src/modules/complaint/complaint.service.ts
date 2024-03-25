@@ -1,12 +1,13 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { FindOptions, Op } from 'sequelize';
-import { COMPLAINT_REPOSITORY, PAGINATION_DEFAULT_LIMIT } from 'src/constants';
 import { Complaint } from 'src/entities/complaint.entity';
 import { IPagination, IPaginationResponse } from 'src/types/pagination.type';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { ICreateComplaint } from './types/create_complaint.type';
 import { IUpdateComplaint } from './types/update_complaint.type';
 import { Meridian } from 'src/entities/meridian.entity';
+import { PAGINATION_DEFAULT_LIMIT } from 'src/constants/database.const';
+import { COMPLAINT_REPOSITORY } from 'src/constants/repository.const';
 
 @Injectable()
 export class ComplaintService {

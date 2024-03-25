@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DOCTOR_DIAGNOSIS_REPOSITORY } from 'src/constants';
+import { DOCTOR_DIAGNOSIS_REPOSITORY } from 'src/constants/repository.const';
 import { DoctorDiagnosis } from 'src/entities/doctor_diagnosis.entity';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { DoctorDiagnosisController } from './doctor_diagnosis.controller';

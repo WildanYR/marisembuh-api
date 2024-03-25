@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { THERAPY_REPOSITORY } from 'src/constants';
+import { THERAPY_REPOSITORY } from 'src/constants/repository.const';
 import { Therapy } from 'src/entities/therapy.entity';
 import { PaginationUtility } from 'src/utils/pagination.util';
 import { TherapyController } from './therapy.controller';
