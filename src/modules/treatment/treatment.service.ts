@@ -44,7 +44,9 @@ import {
   TREATMENT_PULSE_CHECKUP_REPOSITORY,
   TREATMENT_THERAPY_REPOSITORY,
   TREATMENT_SELF_THERAPY_REPOSITORY,
+  PATIENT_ARRIVAL_REPOSITORY,
 } from 'src/constants/repository.const';
+import { PatientArrival } from 'src/entities/patient_arrival.entity';
 
 @Injectable()
 export class TreatmentService {
@@ -158,6 +160,8 @@ export class TreatmentService {
     private treatmentTherapyRepository: typeof TreatmentTherapy,
     @Inject(TREATMENT_SELF_THERAPY_REPOSITORY)
     private treatmentSelfTherapyRepository: typeof TreatmentSelfTherapy,
+    @Inject(PATIENT_ARRIVAL_REPOSITORY)
+    private patientArrivalRepository: typeof PatientArrival,
   ) {}
 
   async getAllWithPagination(
@@ -351,6 +355,18 @@ export class TreatmentService {
           transaction,
         });
       }
+
+      // update patient arrival status to done
+      await this.patientArrivalRepository.update(
+        { done: true },
+        {
+          where: {
+            patient_id: createTreatmentDTO.patient_id,
+            user_id: createTreatmentDTO.user_id,
+          },
+          transaction,
+        },
+      );
 
       await transaction.commit();
     } catch (error) {

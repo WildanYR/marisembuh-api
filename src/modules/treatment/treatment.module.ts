@@ -23,7 +23,9 @@ import {
   TREATMENT_PULSE_CHECKUP_REPOSITORY,
   TREATMENT_THERAPY_REPOSITORY,
   TREATMENT_SELF_THERAPY_REPOSITORY,
+  PATIENT_ARRIVAL_REPOSITORY,
 } from 'src/constants/repository.const';
+import { PatientArrival } from 'src/entities/patient_arrival.entity';
 
 @Module({
   providers: [
@@ -65,6 +67,10 @@ import {
     {
       provide: TREATMENT_SELF_THERAPY_REPOSITORY,
       useValue: TreatmentSelfTherapy,
+    },
+    {
+      provide: PATIENT_ARRIVAL_REPOSITORY,
+      useValue: PatientArrival,
     },
   ],
   controllers: [TreatmentController],

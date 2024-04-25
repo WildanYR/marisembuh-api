@@ -6,6 +6,7 @@ import { DurationAdvice } from './duration_advice.entity';
 import { Medicine } from './medicine.entity';
 import { Meridian } from './meridian.entity';
 import { Patient } from './patient.entity';
+import { PatientArrival } from './patient_arrival.entity';
 import { SelfTherapy } from './self_therapy.entity';
 import { Setting } from './setting.entity';
 import { StomachCheckup } from './stomach_checkup.entity';
@@ -50,4 +51,5 @@ export default () => [
   TreatmentSelfTherapy,
   Absence,
   Setting,
+  PatientArrival,
 ];

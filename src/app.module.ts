@@ -25,6 +25,7 @@ import { DurationAdviceModule } from './modules/duration_advice/duration_advice.
 import { TreatmentModule } from './modules/treatment/treatment.module';
 import { AbsenceModule } from './modules/absence/absence.module';
 import { AnalyticModule } from './modules/analytic/analytic.module';
+import { PatientArrivalModule } from './modules/patient_arrival/patient_arrival.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { AnalyticModule } from './modules/analytic/analytic.module';
     TreatmentModule,
     AbsenceModule,
     AnalyticModule,
+    PatientArrivalModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: AuthGuard }],
