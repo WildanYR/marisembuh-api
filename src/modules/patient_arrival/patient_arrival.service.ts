@@ -9,6 +9,7 @@ import { Patient } from 'src/entities/patient.entity';
 import { User } from 'src/entities/user.entity';
 import { IUpdatePatientArrival } from './types/update_patient_arrival.type';
 import { Includeable } from 'sequelize';
+import { IGetPatientArrivalQuery } from './types/get_patient_arrival_query.type';
 
 @Injectable()
 export class PatientArrivalService {
@@ -37,16 +38,34 @@ export class PatientArrivalService {
 
   async getAllWithPagination(
     pagination: IPagination,
+    getFilter?: IGetPatientArrivalQuery,
   ): Promise<IPaginationResponse<PatientArrival>> {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
+
+    const condition: any = {};
+    if (typeof getFilter?.done === 'boolean') {
+      condition.done = getFilter.done;
+    }
+    if (getFilter?.patient_id) {
+      condition.patient_id = getFilter.patient_id;
+    }
+    if (getFilter?.user_id) {
+      condition.user_id = getFilter.user_id;
+    }
+    if (getFilter?.tag_user_id) {
+      condition.tag_user_id = getFilter.tag_user_id;
+    }
+
     const patientArrivals = await this.patientArrivalRepository.findAndCountAll(
       {
         include: this.queryIncludes,
+        where: condition,
         offset,
         limit,
       },
     );
+
     return this.paginationUtility.paginationResponse(
       pagination,
       patientArrivals.rows,
