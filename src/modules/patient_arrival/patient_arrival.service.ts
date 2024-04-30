@@ -10,6 +10,7 @@ import { User } from 'src/entities/user.entity';
 import { IUpdatePatientArrival } from './types/update_patient_arrival.type';
 import { Includeable } from 'sequelize';
 import { IGetPatientArrivalQuery } from './types/get_patient_arrival_query.type';
+import { Clinic } from 'src/entities/clinic.entity';
 
 @Injectable()
 export class PatientArrivalService {
@@ -25,6 +26,9 @@ export class PatientArrivalService {
         'birthdate',
         'address',
         'telp',
+      ],
+      include: [
+        { model: Clinic, as: 'register_clinic', attributes: ['id', 'name'] },
       ],
     },
     { model: User, as: 'user', attributes: ['id', 'name'] },
