@@ -23,6 +23,7 @@ export class DurationAdviceService {
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const durationadvices = await this.durationAdviceRepository.findAndCountAll(
       {
+        order: [['id', 'desc']],
         offset,
         limit,
       },
@@ -42,6 +43,7 @@ export class DurationAdviceService {
 
   async findAllByName(name: string): Promise<DurationAdvice[]> {
     return await this.durationAdviceRepository.findAll({
+      order: [['id', 'desc']],
       where: { name: { [Op.substring]: name } },
     });
   }

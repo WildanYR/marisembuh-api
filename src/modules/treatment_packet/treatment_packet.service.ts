@@ -23,6 +23,7 @@ export class TreatmentPacketService {
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const treatmentpackets =
       await this.treatmentPacketRepository.findAndCountAll({
+        order: [['id', 'desc']],
         offset,
         limit,
       });
@@ -41,6 +42,7 @@ export class TreatmentPacketService {
 
   async findAllByName(name: string): Promise<TreatmentPacket[]> {
     return await this.treatmentPacketRepository.findAll({
+      order: [['id', 'desc']],
       where: { name: { [Op.substring]: name } },
     });
   }

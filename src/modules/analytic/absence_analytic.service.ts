@@ -46,7 +46,7 @@ export class AbsenceAnalyticService {
     const dateRange = this.dateUtility.dateFilterToDateRange(dateFilter);
 
     let sql =
-      'SELECT u.id AS id, u.name AS `name`, COALESCE(can.absence_count, 0) AS `normal`, COALESCE(cal.absence_count, 0) AS `late` FROM user u LEFT JOIN ( SELECT uan.id, COUNT(an.id) AS `absence_count` FROM user uan LEFT JOIN absence an ON uan.id = an.user_id WHERE an.created_at BETWEEN :start_date AND :end_date GROUP BY uan.id ) can ON u.id = can.id LEFT JOIN ( SELECT ual.id, COUNT(al.id) AS `absence_count` FROM user ual LEFT JOIN absence al ON ual.id = al.user_id WHERE al.created_at BETWEEN :start_date AND :end_date AND TIME(al.created_at) > :late_time GROUP BY ual.id ) cal ON u.id = cal.id';
+      'SELECT u.id AS id, u.name AS `name`, COALESCE(can.absence_count, 0) AS `normal`, COALESCE(cal.absence_count, 0) AS `late` FROM user u LEFT JOIN ( SELECT uan.id, COUNT(an.id) AS `absence_count` FROM user uan LEFT JOIN absence an ON uan.id = an.user_id WHERE an.created_at BETWEEN :start_date AND :end_date GROUP BY uan.id ) can ON u.id = can.id LEFT JOIN ( SELECT ual.id, COUNT(al.id) AS `absence_count` FROM user ual LEFT JOIN absence al ON ual.id = al.user_id WHERE al.created_at BETWEEN :start_date AND :end_date AND TIME(al.created_at) > :late_time GROUP BY ual.id ) cal ON u.id = cal.id ORDER BY u.id DESC';
 
     const condition = [];
 
@@ -111,7 +111,7 @@ export class AbsenceAnalyticService {
     const dateRange = this.dateUtility.dateFilterToDateRange(dateFilter);
 
     let sql =
-      'SELECT u.id AS id, u.name AS `name`, COALESCE(can.absence_count, 0) AS `normal`, COALESCE(cal.absence_count, 0) AS `late` FROM user u LEFT JOIN ( SELECT uan.id, COUNT(an.id) AS `absence_count` FROM user uan LEFT JOIN absence an ON uan.id = an.user_id WHERE an.created_at BETWEEN :start_date AND :end_date GROUP BY uan.id ) can ON u.id = can.id LEFT JOIN ( SELECT ual.id, COUNT(al.id) AS `absence_count` FROM user ual LEFT JOIN absence al ON ual.id = al.user_id WHERE al.created_at BETWEEN :start_date AND :end_date AND TIME(al.created_at) > :late_time GROUP BY ual.id ) cal ON u.id = cal.id WHERE u.name LIKE :name';
+      'SELECT u.id AS id, u.name AS `name`, COALESCE(can.absence_count, 0) AS `normal`, COALESCE(cal.absence_count, 0) AS `late` FROM user u LEFT JOIN ( SELECT uan.id, COUNT(an.id) AS `absence_count` FROM user uan LEFT JOIN absence an ON uan.id = an.user_id WHERE an.created_at BETWEEN :start_date AND :end_date GROUP BY uan.id ) can ON u.id = can.id LEFT JOIN ( SELECT ual.id, COUNT(al.id) AS `absence_count` FROM user ual LEFT JOIN absence al ON ual.id = al.user_id WHERE al.created_at BETWEEN :start_date AND :end_date AND TIME(al.created_at) > :late_time GROUP BY ual.id ) cal ON u.id = cal.id WHERE u.name LIKE :name ORDER BY u.id DESC';
 
     const absenceLateSettingDb = await this.settingRepository.findOne({
       where: { name: ABSENCE_LATE_HOUR_SETTING },
@@ -194,6 +194,7 @@ export class AbsenceAnalyticService {
 
     const absences = await this.absenceRepository.findAndCountAll({
       where: {
+        order: [['id', 'desc']],
         user_id: userId,
         created_at: {
           [Op.between]: [dateRange.startOfDate, dateRange.endOfDate],

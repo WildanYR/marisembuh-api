@@ -63,6 +63,7 @@ export class PatientArrivalService {
 
     const patientArrivals = await this.patientArrivalRepository.findAndCountAll(
       {
+        order: [['id', 'desc']],
         include: this.queryIncludes,
         where: condition,
         offset,

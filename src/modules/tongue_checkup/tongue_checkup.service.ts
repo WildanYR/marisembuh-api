@@ -22,6 +22,7 @@ export class TongueCheckupService {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const tonguecheckups = await this.tongueCheckupRepository.findAndCountAll({
+      order: [['id', 'desc']],
       offset,
       limit,
     });
@@ -40,6 +41,7 @@ export class TongueCheckupService {
 
   async findAllByName(name: string): Promise<TongueCheckup[]> {
     return await this.tongueCheckupRepository.findAll({
+      order: [['id', 'desc']],
       where: { name: { [Op.substring]: name } },
     });
   }

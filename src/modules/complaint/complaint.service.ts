@@ -30,6 +30,7 @@ export class ComplaintService {
     }
 
     const complaints = await this.complaintRepository.findAndCountAll({
+      order: [['id', 'desc']],
       offset,
       limit,
       ...includeMeridian,
@@ -67,6 +68,7 @@ export class ComplaintService {
     }
 
     return await this.complaintRepository.findAll({
+      order: [['id', 'desc']],
       where: { name: { [Op.substring]: name } },
       ...includeMeridian,
     });

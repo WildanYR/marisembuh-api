@@ -21,6 +21,7 @@ export class ClinicService {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const clinics = await this.clinicRepository.findAndCountAll({
+      order: [['id', 'desc']],
       offset,
       limit,
     });
@@ -34,6 +35,7 @@ export class ClinicService {
   async findById(clinicId: number): Promise<Clinic> {
     return await this.clinicRepository.findOne({
       where: { id: clinicId },
+      order: [['id', 'desc']],
     });
   }
 

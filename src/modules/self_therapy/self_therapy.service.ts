@@ -22,6 +22,7 @@ export class SelfTherapyService {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const selftherapys = await this.selfTherapyRepository.findAndCountAll({
+      order: [['id', 'desc']],
       offset,
       limit,
     });
@@ -40,6 +41,7 @@ export class SelfTherapyService {
 
   async findAllByName(name: string): Promise<SelfTherapy[]> {
     return await this.selfTherapyRepository.findAll({
+      order: [['id', 'desc']],
       where: { name: { [Op.substring]: name } },
     });
   }

@@ -23,6 +23,7 @@ export class StomachCheckupService {
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const stomachcheckups = await this.stomachCheckupRepository.findAndCountAll(
       {
+        order: [['id', 'desc']],
         offset,
         limit,
       },
@@ -42,6 +43,7 @@ export class StomachCheckupService {
 
   async findAllByName(name: string): Promise<StomachCheckup[]> {
     return await this.stomachCheckupRepository.findAll({
+      order: [['id', 'desc']],
       where: { name: { [Op.substring]: name } },
     });
   }

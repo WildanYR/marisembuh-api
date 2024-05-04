@@ -29,6 +29,7 @@ export class MeridianService {
     }
 
     const meridians = await this.meridianRepository.findAndCountAll({
+      order: [['id', 'desc']],
       offset,
       limit,
       ...includeComplaint,
@@ -51,6 +52,7 @@ export class MeridianService {
     }
 
     return await this.meridianRepository.findAll({
+      order: [['id', 'desc']],
       where: { name: { [Op.substring]: name } },
       ...includeComplaint,
     });

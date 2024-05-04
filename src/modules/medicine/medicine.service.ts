@@ -21,6 +21,7 @@ export class MedicineService {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const medicines = await this.medicineRepository.findAndCountAll({
+      order: [['id', 'desc']],
       offset,
       limit,
     });
@@ -39,6 +40,7 @@ export class MedicineService {
 
   async findAllByName(name: string): Promise<Medicine[]> {
     return await this.medicineRepository.findAll({
+      order: [['id', 'desc']],
       where: { name: { [Op.substring]: name } },
     });
   }

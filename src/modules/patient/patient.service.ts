@@ -34,6 +34,7 @@ export class PatientService {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const patients = await this.patientRepository.findAndCountAll({
+      order: [['id', 'desc']],
       offset,
       limit,
       include: [
@@ -81,6 +82,7 @@ export class PatientService {
       }
     }
     return await this.patientRepository.findAll({
+      order: [['id', 'desc']],
       where: { ...condition },
       include: [
         { model: User, as: 'registered_by' },

@@ -23,6 +23,7 @@ export class DoctorDiagnosisService {
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const doctordiagnosiss =
       await this.doctorDiagnosisRepository.findAndCountAll({
+        order: [['id', 'desc']],
         offset,
         limit,
       });
@@ -41,6 +42,7 @@ export class DoctorDiagnosisService {
 
   async findAllByName(name: string): Promise<DoctorDiagnosis[]> {
     return await this.doctorDiagnosisRepository.findAll({
+      order: [['id', 'desc']],
       where: { name: { [Op.substring]: name } },
     });
   }

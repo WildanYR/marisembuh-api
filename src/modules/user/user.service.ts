@@ -36,6 +36,7 @@ export class UserService {
     const offset = this.paginationUtility.calculateOffset(pagination);
     const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
     const users = await this.userRepository.findAndCountAll({
+      order: [['id', 'desc']],
       offset,
       limit,
       include: this.getInclude,
@@ -64,6 +65,7 @@ export class UserService {
 
   async findByNameEmail(query: string): Promise<User[]> {
     return await this.userRepository.findAll({
+      order: [['id', 'desc']],
       where: {
         [Op.or]: [
           { name: { [Op.substring]: query } },
