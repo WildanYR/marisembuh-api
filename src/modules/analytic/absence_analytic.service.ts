@@ -194,12 +194,12 @@ export class AbsenceAnalyticService {
 
     const absences = await this.absenceRepository.findAndCountAll({
       where: {
-        order: [['id', 'desc']],
         user_id: userId,
         created_at: {
           [Op.between]: [dateRange.startOfDate, dateRange.endOfDate],
         },
       },
+      order: [['id', 'desc']],
       offset,
       limit,
     });
