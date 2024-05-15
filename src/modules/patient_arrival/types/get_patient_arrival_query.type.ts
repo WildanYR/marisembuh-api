@@ -4,4 +4,6 @@ export interface IGetPatientArrivalQuery {
   user_id?: number;
   tag_user_id?: number;
   type?: string;
+  start_date?: string;
+  end_date?: string;
 }

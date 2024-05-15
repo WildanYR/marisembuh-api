@@ -26,6 +26,9 @@ export class PatientArrival extends Model {
   @Column(DataType.STRING)
   type: string;
 
+  @Column(DataType.DATE)
+  date: Date;
+
   @AllowNull(false)
   @Column(DataType.BIGINT.UNSIGNED)
   patient_id: number;

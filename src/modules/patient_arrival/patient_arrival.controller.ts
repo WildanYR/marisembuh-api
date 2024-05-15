@@ -48,6 +48,7 @@ export class PatientArrivalController {
     @Param('patientArrivalId') patientArrivalId: number,
     @Body() updateTreatmentDTO: UpdatePatientArrivalDTO,
   ) {
+    console.log(updateTreatmentDTO);
     await this.patientArrivalService.update(
       patientArrivalId,
       updateTreatmentDTO,

@@ -11,6 +11,8 @@ import { IUpdatePatientArrival } from './types/update_patient_arrival.type';
 import { Includeable } from 'sequelize';
 import { IGetPatientArrivalQuery } from './types/get_patient_arrival_query.type';
 import { Clinic } from 'src/entities/clinic.entity';
+import { Op } from 'sequelize';
+import { DateUtility } from 'src/utils/date.util';
 
 @Injectable()
 export class PatientArrivalService {
@@ -36,6 +38,7 @@ export class PatientArrivalService {
   ];
   constructor(
     private paginationUtility: PaginationUtility,
+    private dateUtility: DateUtility,
     @Inject(PATIENT_ARRIVAL_REPOSITORY)
     private patientArrivalRepository: typeof PatientArrival,
   ) {}
@@ -62,6 +65,15 @@ export class PatientArrivalService {
     }
     if (getFilter?.type) {
       condition.type = getFilter.type;
+    }
+    if (getFilter?.start_date && getFilter?.end_date) {
+      const dateRange = this.dateUtility.dateFilterToDateRange({
+        start_date: getFilter.start_date,
+        end_date: getFilter.end_date,
+      });
+      condition.date = {
+        [Op.between]: [dateRange.startOfDate, dateRange.endOfDate],
+      };
     }
 
     const patientArrivals = await this.patientArrivalRepository.findAndCountAll(
@@ -98,6 +110,7 @@ export class PatientArrivalService {
     patientArrivalId: number,
     updatePatientTreatmentData: IUpdatePatientArrival,
   ) {
+    console.log(updatePatientTreatmentData);
     const patientArrival = await this.patientArrivalRepository.findOne({
       where: { id: patientArrivalId },
     });

@@ -3,4 +3,5 @@ export interface ICreatePatientArrival {
   user_id: number;
   tag_user_id: number;
   type: string;
+  date?: Date;
 }
