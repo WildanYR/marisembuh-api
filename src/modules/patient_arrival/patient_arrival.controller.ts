@@ -31,6 +31,11 @@ export class PatientArrivalController {
     );
   }
 
+  @Get(':id')
+  async getById(@Param('id') id: number) {
+    return await this.patientArrivalService.getById(id);
+  }
+
   @Post()
   async create(@Body() createPatientArrivalDTO: CreatePatientArrivalDTO) {
     await this.patientArrivalService.create({
