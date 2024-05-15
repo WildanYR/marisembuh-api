@@ -60,6 +60,9 @@ export class PatientArrivalService {
     if (getFilter?.tag_user_id) {
       condition.tag_user_id = getFilter.tag_user_id;
     }
+    if (getFilter?.type) {
+      condition.type = getFilter.type;
+    }
 
     const patientArrivals = await this.patientArrivalRepository.findAndCountAll(
       {

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ICreatePatientArrival } from '../types/create_patient_arrival.type';
 
 export class CreatePatientArrivalDTO implements ICreatePatientArrival {
@@ -13,4 +13,8 @@ export class CreatePatientArrivalDTO implements ICreatePatientArrival {
   @IsNotEmpty()
   @IsNumber()
   user_id: number;
+
+  @IsNotEmpty()
+  @IsString()
+  type: string;
 }

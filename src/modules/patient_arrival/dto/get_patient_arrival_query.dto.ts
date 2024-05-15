@@ -1,4 +1,4 @@
-import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { IGetPatientArrivalQuery } from '../types/get_patient_arrival_query.type';
 import { Transform } from 'class-transformer';
 
@@ -22,4 +22,8 @@ export class GetPatientArrivalQueryDTO implements IGetPatientArrivalQuery {
   @IsNumber()
   @Transform((param) => parseInt(param.value))
   user_id?: number;
+
+  @IsOptional()
+  @IsString()
+  type?: string;
 }

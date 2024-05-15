@@ -23,6 +23,9 @@ export class PatientArrival extends Model {
   @Column(DataType.BOOLEAN)
   done: boolean;
 
+  @Column(DataType.STRING)
+  type: string;
+
   @AllowNull(false)
   @Column(DataType.BIGINT.UNSIGNED)
   patient_id: number;
