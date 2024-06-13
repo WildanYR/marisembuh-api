@@ -16,7 +16,9 @@ import {
   SETTING_REPOSITORY,
   CLINIC_REPOSITORY,
   THERAPY_REPOSITORY,
+  TREATMENT_REPOSITORY,
 } from 'src/constants/repository.const';
+import { Treatment } from 'src/entities/treatment.entity';
 
 @Module({
   providers: [
@@ -27,6 +29,7 @@ import {
     { provide: SETTING_REPOSITORY, useValue: Setting },
     { provide: CLINIC_REPOSITORY, useValue: Clinic },
     { provide: THERAPY_REPOSITORY, useValue: Therapy },
+    { provide: TREATMENT_REPOSITORY, useValue: Treatment },
     TotalPatientAnalyticService,
     AbsenceAnalyticService,
   ],

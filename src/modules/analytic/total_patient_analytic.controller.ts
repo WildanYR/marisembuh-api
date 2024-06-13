@@ -62,4 +62,11 @@ export class TotalPatientAnalyticController {
       { ...dateFilterDTO },
     );
   }
+
+  @Get('homecare')
+  async getHomecarePatientAnalytic(@Query() dateFilterDTO: DateFilterDTO) {
+    return await this.totalPatientAnalyticService.getHomecareAnalytic({
+      ...dateFilterDTO,
+    });
+  }
 }

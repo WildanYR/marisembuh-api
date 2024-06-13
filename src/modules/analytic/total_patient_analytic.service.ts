@@ -16,8 +16,11 @@ import {
 import {
   CLINIC_REPOSITORY,
   THERAPY_REPOSITORY,
+  TREATMENT_REPOSITORY,
   USER_REPOSITORY,
 } from 'src/constants/repository.const';
+import { Treatment } from 'src/entities/treatment.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class TotalPatientAnalyticService {
@@ -28,6 +31,7 @@ export class TotalPatientAnalyticService {
     @Inject(CLINIC_REPOSITORY) private clinicRepository: typeof Clinic,
     @Inject(USER_REPOSITORY) private userRepository: typeof User,
     @Inject(THERAPY_REPOSITORY) private therapyRepository: typeof Therapy,
+    @Inject(TREATMENT_REPOSITORY) private treatmentRepository: typeof Treatment,
   ) {}
 
   async getClinicAnalyticPagination(
@@ -172,5 +176,31 @@ export class TotalPatientAnalyticService {
         name: `%${name}%`,
       },
     })) as ITotalatientAnalyticResponse[];
+  }
+
+  async getHomecareAnalytic(
+    dateFilter?: IDateFilter,
+  ): Promise<ITotalatientAnalyticResponse[]> {
+    const dateRange = this.dateUtility.dateFilterToDateRange(dateFilter);
+
+    const homecareCount = await this.treatmentRepository.count({
+      where: {
+        clinic_id: { [Op.is]: null },
+        created_at: {
+          [Op.between]: [
+            this.dateUtility.formatLocaleString(dateRange.startOfDate),
+            this.dateUtility.formatLocaleString(dateRange.endOfDate),
+          ],
+        },
+      },
+    });
+
+    return [
+      {
+        id: 1,
+        name: 'Homecare',
+        total_patient: homecareCount,
+      },
+    ];
   }
 }
