@@ -203,4 +203,97 @@ export class TotalPatientAnalyticService {
       },
     ];
   }
+
+  async getComplaintAnalytic(
+    pagination?: IPagination,
+    dateFilter?: IDateFilter,
+  ) {
+    const dateRange = this.dateUtility.dateFilterToDateRange(dateFilter);
+    const offset = this.paginationUtility.calculateOffset(pagination);
+    const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
+
+    let sql =
+      'SELECT c.id as id, c.name as name, COALESCE(j.total_patient, 0) as total_patient FROM complaint c LEFT JOIN ( SELECT tc.complaint_id as complaint_id, COUNT(tc.id) as total_patient FROM treatment_complaint tc INNER JOIN treatment t ON tc.treatment_id = t.id AND ( t.created_at BETWEEN :start_date AND :end_date ) GROUP BY complaint_id ) j ON j.complaint_id = c.id ORDER BY total_patient DESC LIMIT :limit OFFSET :offset';
+
+    const therapyCount = await this.therapyRepository.count();
+
+    const response = (await this.mysqlProvider.rawQuery(sql, {
+      type: QueryTypes.SELECT,
+      replacements: {
+        start_date: this.dateUtility.formatLocaleString(dateRange.startOfDate),
+        end_date: this.dateUtility.formatLocaleString(dateRange.endOfDate),
+        limit,
+        offset,
+      },
+    })) as ITotalatientAnalyticResponse[];
+
+    return this.paginationUtility.paginationResponse(
+      pagination,
+      response,
+      therapyCount,
+    );
+  }
+
+  async getComplaintAnalyticByName(name: string, dateFilter?: IDateFilter) {
+    const dateRange = this.dateUtility.dateFilterToDateRange(dateFilter);
+    let sql =
+      'SELECT c.id as id, c.name as name, COALESCE(j.total_patient, 0) as total_patient FROM complaint c LEFT JOIN ( SELECT tc.complaint_id as complaint_id, COUNT(tc.id) as total_patient FROM treatment_complaint tc INNER JOIN treatment t ON tc.treatment_id = t.id AND ( t.created_at BETWEEN :start_date AND :end_date ) GROUP BY complaint_id ) j ON j.complaint_id = c.id WHERE c.name LIKE :name ORDER BY total_patient DESC LIMIT :limit OFFSET :offset';
+
+    return (await this.mysqlProvider.rawQuery(sql, {
+      type: QueryTypes.SELECT,
+      replacements: {
+        start_date: this.dateUtility.formatLocaleString(dateRange.startOfDate),
+        end_date: this.dateUtility.formatLocaleString(dateRange.endOfDate),
+        name: `%${name}%`,
+      },
+    })) as ITotalatientAnalyticResponse[];
+  }
+
+  async getDoctorDiagnosisAnalytic(
+    pagination?: IPagination,
+    dateFilter?: IDateFilter,
+  ) {
+    const dateRange = this.dateUtility.dateFilterToDateRange(dateFilter);
+    const offset = this.paginationUtility.calculateOffset(pagination);
+    const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
+
+    let sql =
+      'SELECT dd.id as id, dd.name as name, COALESCE(j.total_patient, 0) as total_patient FROM doctor_diagnosis dd LEFT JOIN ( SELECT tdd.doctor_diagnosis_id as doctor_diagnosis_id, COUNT(tdd.id) as total_patient FROM treatment_doctor_diagnosis tdd INNER JOIN treatment t ON tdd.treatment_id = t.id AND ( t.created_at BETWEEN :start_date AND :end_date ) GROUP BY doctor_diagnosis_id ) j ON j.doctor_diagnosis_id = dd.id ORDER BY total_patient DESC LIMIT :limit OFFSET :offset';
+
+    const therapyCount = await this.therapyRepository.count();
+
+    const response = (await this.mysqlProvider.rawQuery(sql, {
+      type: QueryTypes.SELECT,
+      replacements: {
+        start_date: this.dateUtility.formatLocaleString(dateRange.startOfDate),
+        end_date: this.dateUtility.formatLocaleString(dateRange.endOfDate),
+        limit,
+        offset,
+      },
+    })) as ITotalatientAnalyticResponse[];
+
+    return this.paginationUtility.paginationResponse(
+      pagination,
+      response,
+      therapyCount,
+    );
+  }
+
+  async getDoctorDiagnosisAnalyticByName(
+    name: string,
+    dateFilter?: IDateFilter,
+  ) {
+    const dateRange = this.dateUtility.dateFilterToDateRange(dateFilter);
+    let sql =
+      'SELECT dd.id as id, dd.name as name, COALESCE(j.total_patient, 0) as total_patient FROM doctor_diagnosis dd LEFT JOIN ( SELECT tdd.doctor_diagnosis_id as doctor_diagnosis_id, COUNT(tdd.id) as total_patient FROM treatment_doctor_diagnosis tdd INNER JOIN treatment t ON tdd.treatment_id = t.id AND ( t.created_at BETWEEN :start_date AND :end_date ) GROUP BY doctor_diagnosis_id ) j ON j.doctor_diagnosis_id = dd.id WHERE dd.name LIKE :name ORDER BY total_patient DESC LIMIT :limit OFFSET :offset';
+
+    return (await this.mysqlProvider.rawQuery(sql, {
+      type: QueryTypes.SELECT,
+      replacements: {
+        start_date: this.dateUtility.formatLocaleString(dateRange.startOfDate),
+        end_date: this.dateUtility.formatLocaleString(dateRange.endOfDate),
+        name: `%${name}%`,
+      },
+    })) as ITotalatientAnalyticResponse[];
+  }
 }

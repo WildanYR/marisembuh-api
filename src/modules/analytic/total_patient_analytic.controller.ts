@@ -69,4 +69,40 @@ export class TotalPatientAnalyticController {
       ...dateFilterDTO,
     });
   }
+
+  @Get('complaint')
+  async getComplaintAnalytic(
+    @Query() paginationDTO: PaginationDTO,
+    @Query() dateFilterDTO: DateFilterDTO,
+    @Query('s') name: string,
+  ) {
+    if (name) {
+      return await this.totalPatientAnalyticService.getComplaintAnalyticByName(
+        name,
+        { ...dateFilterDTO },
+      );
+    }
+    return await this.totalPatientAnalyticService.getComplaintAnalytic(
+      { ...paginationDTO },
+      { ...dateFilterDTO },
+    );
+  }
+
+  @Get('doctor-diagnosis')
+  async getDoctorDiagnosisAnalytic(
+    @Query() paginationDTO: PaginationDTO,
+    @Query() dateFilterDTO: DateFilterDTO,
+    @Query('s') name: string,
+  ) {
+    if (name) {
+      return await this.totalPatientAnalyticService.getDoctorDiagnosisAnalyticByName(
+        name,
+        { ...dateFilterDTO },
+      );
+    }
+    return await this.totalPatientAnalyticService.getDoctorDiagnosisAnalytic(
+      { ...paginationDTO },
+      { ...dateFilterDTO },
+    );
+  }
 }
