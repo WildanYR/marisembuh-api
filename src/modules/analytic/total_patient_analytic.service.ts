@@ -296,4 +296,52 @@ export class TotalPatientAnalyticService {
       },
     })) as ITotalatientAnalyticResponse[];
   }
+
+  async getTreatmentPacketAnalytic(
+    pagination?: IPagination,
+    dateFilter?: IDateFilter,
+  ) {
+    const dateRange = this.dateUtility.dateFilterToDateRange(dateFilter);
+    const offset = this.paginationUtility.calculateOffset(pagination);
+    const limit = pagination.limit || PAGINATION_DEFAULT_LIMIT;
+
+    let sql =
+      'SELECT tp.id as id, tp.name as name, COALESCE(j.total_patient, 0) as total_patient FROM treatment_packet tp LEFT JOIN ( SELECT tp.id as treatment_packet_id, COUNT(t.id) AS total_patient FROM treatment_packet tp LEFT JOIN treatment t ON tp.id = t.treatment_packet_id AND (t.created_at BETWEEN :start_date AND :end_date) GROUP BY tp.id ) j ON j.treatment_packet_id = tp.id ORDER BY total_patient DESC LIMIT :limit OFFSET :offset';
+
+    const therapyCount = await this.therapyRepository.count();
+
+    const response = (await this.mysqlProvider.rawQuery(sql, {
+      type: QueryTypes.SELECT,
+      replacements: {
+        start_date: this.dateUtility.formatLocaleString(dateRange.startOfDate),
+        end_date: this.dateUtility.formatLocaleString(dateRange.endOfDate),
+        limit,
+        offset,
+      },
+    })) as ITotalatientAnalyticResponse[];
+
+    return this.paginationUtility.paginationResponse(
+      pagination,
+      response,
+      therapyCount,
+    );
+  }
+
+  async getTreatmentPacketAnalyticByName(
+    name: string,
+    dateFilter?: IDateFilter,
+  ) {
+    const dateRange = this.dateUtility.dateFilterToDateRange(dateFilter);
+    let sql =
+      'SELECT tp.id as id, tp.name as name, COALESCE(j.total_patient, 0) as total_patient FROM treatment_packet tp LEFT JOIN ( SELECT tp.id as treatment_packet_id, COUNT(t.id) AS total_patient FROM treatment_packet tp LEFT JOIN treatment t ON tp.id = t.treatment_packet_id AND ( t.created_at BETWEEN :start_date AND :end_date ) GROUP BY tp.id ) j ON j.treatment_packet_id = tp.id WHERE tp.name LIKE :name ORDER BY total_patient DESC';
+
+    return (await this.mysqlProvider.rawQuery(sql, {
+      type: QueryTypes.SELECT,
+      replacements: {
+        start_date: this.dateUtility.formatLocaleString(dateRange.startOfDate),
+        end_date: this.dateUtility.formatLocaleString(dateRange.endOfDate),
+        name: `%${name}%`,
+      },
+    })) as ITotalatientAnalyticResponse[];
+  }
 }

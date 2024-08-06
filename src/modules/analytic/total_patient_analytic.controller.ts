@@ -105,4 +105,22 @@ export class TotalPatientAnalyticController {
       { ...dateFilterDTO },
     );
   }
+
+  @Get('treatment-packet')
+  async getTreatmentPacketAnalytic(
+    @Query() paginationDTO: PaginationDTO,
+    @Query() dateFilterDTO: DateFilterDTO,
+    @Query('s') name: string,
+  ) {
+    if (name) {
+      return await this.totalPatientAnalyticService.getTreatmentPacketAnalyticByName(
+        name,
+        { ...dateFilterDTO },
+      );
+    }
+    return await this.totalPatientAnalyticService.getTreatmentPacketAnalytic(
+      { ...paginationDTO },
+      { ...dateFilterDTO },
+    );
+  }
 }
