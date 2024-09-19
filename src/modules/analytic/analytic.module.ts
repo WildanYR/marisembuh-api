@@ -17,8 +17,12 @@ import {
   CLINIC_REPOSITORY,
   THERAPY_REPOSITORY,
   TREATMENT_REPOSITORY,
+  PATIENT_REPOSITORY,
 } from 'src/constants/repository.const';
 import { Treatment } from 'src/entities/treatment.entity';
+import { PatientAnalyticService } from './patient_analytic.service';
+import { PatientAnalyticController } from './patient_analytic.controller';
+import { Patient } from 'src/entities/patient.entity';
 
 @Module({
   providers: [
@@ -30,9 +34,15 @@ import { Treatment } from 'src/entities/treatment.entity';
     { provide: CLINIC_REPOSITORY, useValue: Clinic },
     { provide: THERAPY_REPOSITORY, useValue: Therapy },
     { provide: TREATMENT_REPOSITORY, useValue: Treatment },
+    { provide: PATIENT_REPOSITORY, useValue: Patient },
     TotalPatientAnalyticService,
     AbsenceAnalyticService,
+    PatientAnalyticService,
   ],
-  controllers: [TotalPatientAnalyticController, AbsenceAnalyticController],
+  controllers: [
+    TotalPatientAnalyticController,
+    AbsenceAnalyticController,
+    PatientAnalyticController,
+  ],
 })
 export class AnalyticModule {}

@@ -6,6 +6,7 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
@@ -13,6 +14,7 @@ import {
 import { User } from './user.entity';
 import { Clinic } from './clinic.entity';
 import { RM_PREFIX } from 'src/constants/database.const';
+import { Treatment } from './treatment.entity';
 
 @Table({ tableName: 'patient' })
 export class Patient extends Model {
@@ -60,6 +62,9 @@ export class Patient extends Model {
 
   @BelongsTo(() => Clinic, 'clinic_id')
   register_clinic: Clinic;
+
+  @HasMany(() => Treatment)
+  treatment: Treatment[];
 
   @BeforeValidate
   static fillCreatedAt(patient: Patient) {
